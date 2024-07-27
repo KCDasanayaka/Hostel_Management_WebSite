@@ -1,138 +1,74 @@
 /* General styling */
 body {
     font-family: Arial, sans-serif;
-  }
-  
-  .loginCenter {
+}
+
+/* Centering the login container */
+.loginCenter {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-  }
-  
-  
-  .signupForm {
-    width: 60%;
-    background-color: #fff;
+    text-align: center;
+}
+
+/* Sign-up form styling */
+.signupForm {
     padding: 20px;
-  }
-  
-  .loginFormLabel,
-  .loginFormLabel1 {
+}
+
+/* Form layout styling */
+.loginForm {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    margin: 0 auto;
+    max-width: 550px;
+}
+
+.loginFormLabel,
+.loginFormLabel1 {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     margin-bottom: 20px;
-  }
-  
-  .signUpPassword {
+}
+
+.signUpPassword {
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
     width: 48%;
-  }
-  
-  .signUpPassword label {
+}
+
+.signUpPassword label,
+.loginFormLabel label {
     margin-bottom: 5px;
+    font-size: 14px;
     color: #555;
-  }
-  
-  .loginInput {
+}
+
+/* Input field styling */
+.loginInput {
+    width: 100%;
     padding: 10px;
     border: 1px solid #ccc;
-    border-radius: 5px;
+    border-radius: 10px;
     font-size: 16px;
     outline: none;
     transition: border 0.3s;
-  }
-  
-  .loginInput:focus {
-    border-color: #007bff;
-  }
-  
-  .login_home {
-    width: 100%;
-    padding: 10px;
-    background-color: #007bff;
-    border: none;
-    border-radius: 5px;
-    color: #fff;
-    font-size: 18px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  .login_home:hover {
-    background-color: #0056b3;
-  }
-  
-  label {
-    display: block;
-    margin-bottom: 10px;
-    color: #777;
-  }
-  
-  label span {
-    color: #000000;
-    cursor: pointer;
-    text-decoration: underline;
-  }
-  
-  label span:hover {
-    color: #000000;
-  }
-  
-  .loginCenter {
-    text-align: center;
-  }
-  
-  h1 {
-    margin-bottom: 20px;
-    font-size: 50px;
-    color: #000000;
-  }
-  
-  .loginForm {
-    background-color: white;
-    padding: 20px;
-    border-radius: 8px;
-   
-    margin: 0 auto;
-  }
-  
-  .loginFormLabel {
-    margin-bottom: 15px;
-    text-align: left;
-  }
-  
-  .loginFormLabel label {
-    display: block;
-    margin-bottom: 5px;
-    font-size: 14px;
-    color: #555;
-  }
-  
-  .loginInput {
-    width: 100%;
-    padding: 10px;
     color: white;
-    border: 1px solid #ddd;
     background-color: #000000;
-    border-radius: 10px;
-    font-size: 14px;
     box-sizing: border-box;
-  }
-  
-  .loginInput:focus {
-    border-color: #ffffff;
+}
+
+.loginInput:focus {
+    border-color: #007bff;
     outline: none;
-  }
-  
-  label span {
-    color: #000000;
-    font-weight: bold;
-  }
-  
-  .login_home {
+}
+
+/* Button styling */
+.login_home {
     display: inline-block;
     background-color: #000000;
     color: white;
@@ -146,11 +82,35 @@ body {
     width: 100%;
     margin-top: 20px;
     font-weight: 700;
-  }
-  
-  .login_home:hover {
+}
+
+.login_home:hover {
     background-color: #ffffff;
     border: 1px solid black;
     color: rgb(0, 0, 0);
+}
 
-  }  
+/* Label and span styling */
+label {
+    display: block;
+    margin-bottom: 10px;
+    color: #777;
+}
+
+label span {
+    color: #000000;
+    cursor: pointer;
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+label span:hover {
+    color: #000000;
+}
+
+/* Heading styling */
+h1 {
+    margin-bottom: 20px;
+    font-size: 50px;
+    color: #000000;
+}
