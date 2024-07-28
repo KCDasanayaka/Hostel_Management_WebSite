@@ -21,6 +21,7 @@
             line-height: 20px;
             padding-left: 10px;
             letter-spacing: 3.5px;
+            cursor: pointer;
 
             span{
                 font-size: 28px;
