@@ -1,0 +1,77 @@
+/* Container for the detail section */
+.DetailLeft {
+    border-radius: 10px;
+    padding: 20px;
+    max-width: 600px;
+    margin-top: -10%;
+    
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  .Owner {
+    font-size: 40px;
+    text-align: left;
+    color: #000000;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #ffffff;
+    padding-bottom: 10px;
+  }
+  
+  .DetailLeft ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .DetailLeft ul li {
+    padding: 10px 0;
+    border-bottom: 1px solid #000000;
+    display: flex;
+    justify-content: space-between;
+    font-size: 16px;
+    color: #000000;
+  }
+  
+  .DetailLeft ul li span {
+    font-weight: bold;
+    color: #000000;
+  }
+  
+  .DetailLeft p {
+    font-size: 16px;
+    color: #000000;
+    margin-top: 20px;
+    text-align: justify;
+    
+  }
+  .DetailLeft span{
+    font-style: italic;
+    font-weight: 200;
+    
+  }
+  
+  /* Container for the button */
+  .DetailCenter {
+    text-align: center;
+    margin-top: -2%;
+  }
+  
+  .Detail_home {
+    background: #000000;
+    color: #fff;
+    border: none;
+    border-radius: 50px;
+    padding: 10px 20px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.3s;
+  }
+  
+  .Detail_home:hover {
+    background: #ffffff;
+    color: #000000;
+    border: 1px solid black;
+    transform: scale(1.05);
+  }
+  

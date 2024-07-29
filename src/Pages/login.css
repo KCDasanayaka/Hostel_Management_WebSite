@@ -8,12 +8,6 @@
   justify-content: center;
 }
 
-.homeContent {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
 
 .loginCenter {
   text-align: center;

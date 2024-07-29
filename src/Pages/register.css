@@ -1,0 +1,125 @@
+/* register.css */
+
+.Register {
+    font-family: "Poppins", sans-serif;
+    background-color: #f9f9f9;
+    padding: 20px;
+  }
+  
+  
+  .registerHead {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .registerHead h1 {
+    font-size: 50px;
+    font-weight: 700;
+    margin: auto;
+    letter-spacing: 5px;
+    color: #000000;
+  }
+  
+  .registerHead p {
+    margin-top: -5%;
+    color: #000000;
+  }
+  
+  .registerForm {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+  }
+  
+  .registerImage {
+    width: 30%;
+    height: 150px;
+    background-color: #000000;
+    margin-bottom: 20px;
+    border-radius: 8px;
+  }
+  
+  .registerInputs label {
+    display: block;
+    text-align: left;
+    margin-bottom: 5px;
+    color: #000000;
+  }
+  
+  .registerInputs input {
+    width: 100%;
+    padding: 10px;
+    color: white;
+    margin-bottom: 5px;
+    background-color: #000000;
+    border: 1px solid #000000;
+    border-radius: 8px;
+    font-size: 16px;
+  }
+  
+  .registerDouble {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .registerDouble .registerCOntainer {
+    width: 40%;
+  }
+  
+  .registerButton {
+    display: flex;
+    justify-content: flex-end;
+    text-align: center;
+    margin-top: 3%;
+  }
+  
+  .registerButton button {
+    background-color: #000000;
+    color: white;
+    padding: 10px 100px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s;
+  }
+  
+  .registerButton button:hover {
+    background-color: #ffffff;
+    color: #000000;
+    border: 1px solid black;
+  }
+  
+  /* register.css */
+
+/* General styles for the date input */
+input[type="date"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    color: #ffffff; /* Text color */
+    background-color: #000000; /* Background color */
+  }
+  
+  /* Specific styles for the date input icon */
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1); /* Inverts the color to white */
+  }
+  
+  /* Styling the date input field for other browsers */
+  input[type="date"]::-ms-expand {
+    display: none;
+  }
+  
+  input[type="date"]::-moz-focus-inner {
+    border: 0;
+  }
+  
+  input[type="date"]:-moz-focusring {
+    color: transparent;
+    text-shadow: 0 0 0 #000;
+  }
+  
