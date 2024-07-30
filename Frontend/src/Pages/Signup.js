@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import './Signup.css';
 import logo from '../assets/susl_logo_transparent1.png';
 import NavBar from "./Components/NavBar";
@@ -17,11 +17,12 @@ const Signup = () => {
     navigate("/Pages/Login");
   };
 
-  useEffect(()=> {
-    setTimeout(function(){
+  useEffect(() => {
+    const timer = setTimeout(() => {
       setMsg("");
-    },15000);
-  },[msg]);
+    }, 15000);
+    return () => clearTimeout(timer); // Cleanup timeout on unmount
+  }, [msg]);
 
   const handleInputChange = (e, type) => {
     setError("");
@@ -61,10 +62,32 @@ const Signup = () => {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
+
     if (!error && user && email && pass1 && pass2 === pass1) {
-      setMsg("Account created successfully!");
-      setError("");
-      // Perform any other necessary actions such as submitting the data to the server.
+      // Sending data to PHP backend
+      fetch('http://localhost/Hostel_Management_WebSite/Backend/Register.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams({
+          'user': user,
+          'email': email,
+          'pass1': pass1
+        })
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.message) {
+          setMsg(data.message);
+        } else {
+          setMsg("Registration failed.");
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        setMsg("Error connecting to the server.");
+      });
     } else {
       setMsg("");
       if (!user) setError("Username cannot be left blank.");
@@ -73,15 +96,6 @@ const Signup = () => {
       else if (pass2 !== pass1) setError("Passwords do not match.");
     }
   };
-
-  function handleSubmit(){
-    if(user !== "" && email !== ""  && pass1 !== "" && pass2 !== ""){
-       setMsg("success");
-    }
-    else{
-      setError("All field are required!");
-    }
-  }
 
   return (
     <div>
@@ -150,9 +164,7 @@ const Signup = () => {
               </label>
               <button 
                 className="login_home" 
-                type="submit"
-                defaultValue="Submit"
-                onClick={handleSubmit}>
+                type="submit">
                 Sign Up
               </button>
             </form>
