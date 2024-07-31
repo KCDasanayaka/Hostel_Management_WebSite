@@ -29,5 +29,22 @@ class AuthController extends Controller
 
         return response()->json(['message' => 'Registration successful'], 200);
     }
+
+    public function login(Request $request)
+    {
+        $credentials = $request->only('email', 'password');
+
+        if (Auth::attempt($credentials)) {
+            $user = Auth::user();
+            return response()->json([
+                'message' => 'Login successful',
+                'user' => $user
+            ], 200);
+        } else {
+            return response()->json([
+                'message' => 'Invalid credentials'
+            ], 401);
+        }
+    }
 }
 

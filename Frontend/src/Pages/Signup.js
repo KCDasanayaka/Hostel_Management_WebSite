@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState , useEffect} from "react";
 import './Signup.css';
 import logo from '../assets/susl_logo_transparent1.png';
 import NavBar from "./Components/NavBar";
 import { useNavigate } from "react-router-dom";
+import { toast } from 'react-toastify';
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -57,6 +58,14 @@ const Signup = () => {
       else if (pass2 !== pass1) setError("Passwords do not match.");
     }
   };
+  useEffect(() => {
+    if (msg) {
+      toast.success(msg); // Show success toast
+    }
+    if (error) {
+      toast.error(error); // Show error toast
+    }
+  }, [msg, error]);
 
   return (
     <div>
