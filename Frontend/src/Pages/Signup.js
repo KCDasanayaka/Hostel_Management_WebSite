@@ -64,16 +64,17 @@ const Signup = () => {
     e.preventDefault();
 
     if (!error && user && email && pass1 && pass2 === pass1) {
-      // Sending data to PHP backend
-      fetch('http://localhost/Hostel_Management_WebSite/Backend/Register.php', {
+      // Sending data to Laravel backend
+      fetch('http://127.0.0.1:8000/api/register', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
+          'Content-Type': 'application/json',
         },
-        body: new URLSearchParams({
-          'user': user,
-          'email': email,
-          'pass1': pass1
+        body: JSON.stringify({
+          user,
+          email,
+          pass1,
+          pass2
         })
       })
       .then(response => response.json())
