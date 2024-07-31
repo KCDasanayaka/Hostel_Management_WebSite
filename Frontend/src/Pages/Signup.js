@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import './Signup.css';
 import logo from '../assets/susl_logo_transparent1.png';
 import NavBar from "./Components/NavBar";
@@ -17,70 +17,30 @@ const Signup = () => {
     navigate("/Pages/Login");
   };
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setMsg("");
-    }, 15000);
-    return () => clearTimeout(timer); // Cleanup timeout on unmount
-  }, [msg]);
-
-  const handleInputChange = (e, type) => {
-    setError("");
-    switch (type) {
-      case "user":
-        setUser(e.target.value);
-        if (e.target.value === "") {
-          setError("Username cannot be left blank.");
-        }
-        break;
-      case "email":
-        setEmail(e.target.value);
-        if (e.target.value === "") {
-          setError("Email cannot be left blank.");
-        } else if (!/\S+@\S+\.\S+/.test(e.target.value)) {
-          setError("Invalid email format.");
-        }
-        break;
-      case "pass1":
-        setPass1(e.target.value);
-        if (e.target.value === "") {
-          setError("Password cannot be left blank.");
-        }
-        break;
-      case "pass2":
-        setPass2(e.target.value);
-        if (e.target.value === "") {
-          setError("Confirm password cannot be left blank.");
-        } else if (e.target.value !== pass1) {
-          setError("Passwords do not match.");
-        }
-        break;
-      default:
-        break;
-    }
-  };
-
   const handleFormSubmit = (e) => {
     e.preventDefault();
 
-    if (!error && user && email && pass1 && pass2 === pass1) {
-      // Sending data to Laravel backend
-      fetch('http://127.0.0.1:8000/api/register', {
+    if (user && email && pass1 && pass2) {
+      fetch('http://localhost:8000/api/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          user,
-          email,
-          pass1,
-          pass2
-        })
+          name: user,
+          email: email,
+          password: pass1,
+          password_confirmation: pass2,
+        }),
       })
       .then(response => response.json())
       .then(data => {
         if (data.message) {
           setMsg(data.message);
+          setError("");
+        } else if (data.errors) {
+          setError(Object.values(data.errors).join(" "));
+          setMsg("");
         } else {
           setMsg("Registration failed.");
         }
@@ -110,7 +70,7 @@ const Signup = () => {
             <h1>Create an Account</h1>
             <form className="signupForm" onSubmit={handleFormSubmit}>
               <div className="loginFormLabel1">
-                <p>
+                <p className="signupMsg">
                   {msg ? <span className="success">{msg}</span> : <span className="error">{error}</span>}
                 </p>
                 <div className="signUpPassword">
@@ -121,7 +81,7 @@ const Signup = () => {
                     type="text"
                     name="user"
                     value={user}
-                    onChange={(e) => handleInputChange(e, "user")}
+                    onChange={(e) => setUser(e.target.value)}
                   />
                 </div>
                 <div className="signUpPassword">
@@ -132,7 +92,7 @@ const Signup = () => {
                     type="email"
                     name="email"
                     value={email}
-                    onChange={(e) => handleInputChange(e, "email")}
+                    onChange={(e) => setEmail(e.target.value)}
                   />
                 </div>
               </div>
@@ -145,7 +105,7 @@ const Signup = () => {
                     type="password"
                     name="pass1"
                     value={pass1}
-                    onChange={(e) => handleInputChange(e, "pass1")}
+                    onChange={(e) => setPass1(e.target.value)}
                   />
                 </div>
                 <div className="signUpPassword">
@@ -156,7 +116,7 @@ const Signup = () => {
                     type="password"
                     name="pass2"
                     value={pass2}
-                    onChange={(e) => handleInputChange(e, "pass2")}
+                    onChange={(e) => setPass2(e.target.value)}
                   />
                 </div>
               </div>

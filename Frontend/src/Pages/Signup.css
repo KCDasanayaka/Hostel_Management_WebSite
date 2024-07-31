@@ -117,3 +117,9 @@ h1 {
     font-size: 50px;
     color: #000000;
 }
+
+.signupMsg{
+    position: absolute;
+    border: 1 px solid black;
+    padding: 5%;
+}
