@@ -1,4 +1,4 @@
-import React, { useState , useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import './Signup.css';
 import logo from '../assets/susl_logo_transparent1.png';
 import NavBar from "./Components/NavBar";
@@ -28,27 +28,36 @@ const Signup = () => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          name: user,
+          user: user,
           email: email,
-          password: pass1,
-          password_confirmation: pass2,
+          pass1: pass1,
+          pass1_confirmation: pass2, // Ensure the backend expects this
         }),
       })
       .then(response => response.json())
       .then(data => {
-        if (data.message) {
+        if (data.message === 'Registration successful') {
           setMsg(data.message);
           setError("");
+          toast.success(data.message); // Show success toast
+
+          // Navigate to login page after 2 seconds
+          setTimeout(() => {
+            navigate("/Pages/Login");
+          }, 2000);
         } else if (data.errors) {
           setError(Object.values(data.errors).join(" "));
           setMsg("");
+          toast.error(Object.values(data.errors).join(" ")); // Show error toast
         } else {
           setMsg("Registration failed.");
+          toast.error("Registration failed."); // Show error toast
         }
       })
       .catch(error => {
         console.error('Error:', error);
         setMsg("Error connecting to the server.");
+        toast.error("Error connecting to the server."); // Show error toast
       });
     } else {
       setMsg("");
@@ -58,14 +67,6 @@ const Signup = () => {
       else if (pass2 !== pass1) setError("Passwords do not match.");
     }
   };
-  useEffect(() => {
-    if (msg) {
-      toast.success(msg); // Show success toast
-    }
-    if (error) {
-      toast.error(error); // Show error toast
-    }
-  }, [msg, error]);
 
   return (
     <div>
@@ -132,11 +133,7 @@ const Signup = () => {
               <label>
                 Or already have an account? Login <span onClick={handleSignupClick}>here</span>
               </label>
-              <button 
-                className="login_home" 
-                type="submit">
-                Sign Up
-              </button>
+              <button className="login_home" type="submit">Sign Up</button>
             </form>
           </div>
         </div>

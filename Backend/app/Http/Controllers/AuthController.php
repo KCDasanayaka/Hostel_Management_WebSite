@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth; // Ensure this is included
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -15,6 +16,8 @@ class AuthController extends Controller
             'user' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'pass1' => 'required|string|min:8|confirmed',
+        ], [
+            'pass1.confirmed' => 'The password confirmation does not match.',
         ]);
 
         if ($validator->fails()) {
@@ -47,4 +50,3 @@ class AuthController extends Controller
         }
     }
 }
-
