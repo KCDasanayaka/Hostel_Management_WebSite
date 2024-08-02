@@ -1,7 +1,7 @@
-// NavBar.js
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from '../../assets/susl_logo_transparent1.png';
+import LogoutImg from '../../assets/sign-out.png';
 import './NavBar.css';
 
 const NavBar = () => {
@@ -17,9 +17,7 @@ const NavBar = () => {
   }, []);
 
   const handleJoinClick = () => {
-    if (userName) {
-      // Optionally handle user profile or logout logic
-    } else {
+    if (!userName) {
       navigate("/Pages/Login");
     }
   };
@@ -30,6 +28,7 @@ const NavBar = () => {
 
   const handleLogout = () => {
     localStorage.removeItem('user');
+    setUserName(""); // Clear user name from state
     navigate("/Pages/Login");
   };
 
@@ -44,7 +43,17 @@ const NavBar = () => {
       </div>
       <div className="rightNavBar">
         <button className="navButton" onClick={handleJoinClick}>
-          {userName ? userName : "Join"}
+          {userName ? (
+            <>
+              {userName}
+              <img
+                src={LogoutImg}
+                alt="Logout"
+                className="logoutImg"
+                onClick={handleLogout}
+              />
+            </>
+          ) : "Join"}
         </button>
       </div>
     </div>

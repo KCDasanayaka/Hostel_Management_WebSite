@@ -32,15 +32,25 @@
 
     .rightNavBar{
         .navButton{
+            display: flex;
+            flex-direction: row;
             border: 1px solid rgb(255, 255, 255);
-            padding: 5px 10px;
+            padding: 10px 20px;
             cursor: pointer;
             background-color: black;
             color: white;
-            width: 100px;
             border-radius: 15px;
             font-size: 20px;
             font-weight: 700;
+
+            .logoutImg {
+                margin-left: 10px; /* Adjust spacing */
+                cursor: pointer;
+                width: 20px; /* Adjust size */
+                height: 20px; /* Adjust size */
+                filter: invert(100%);
+              }
+              
         }
         .navButton:hover {
             background-color: white;

@@ -18,6 +18,7 @@ const Register = () => {
     phone_number: '',
     nic_number: '',
   });
+  const [image, setImage] = useState(null);
 
   // Handle input changes
   const handleChange = (e) => {
@@ -25,15 +26,25 @@ const Register = () => {
     setFormData({ ...formData, [name]: value });
   };
 
+  // Handle image file selection
+  const handleImageChange = (e) => {
+    setImage(e.target.files[0]);
+  };
+
   // Handle form submission
   const handleRegister = async () => {
+    const formDataToSend = new FormData();
+    Object.keys(formData).forEach((key) => {
+      formDataToSend.append(key, formData[key]);
+    });
+    if (image) {
+      formDataToSend.append('image', image);
+    }
+
     try {
       const response = await fetch('http://localhost:8000/api/register-hostel', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
+        body: formDataToSend,
       });
 
       const data = await response.json();
@@ -58,7 +69,16 @@ const Register = () => {
           <p>Add your correct information for each point</p>
         </div>
         <div className='registerForm'>
-          <div className='registerImage'></div>
+          <div className='registerImage'>
+            <label htmlFor="imageUpload" className="imageUploadLabel">Upload Image</label>
+            <input
+              id="imageUpload"
+              type="file"
+              accept="image/*"
+              onChange={handleImageChange}
+              style={{ display: 'none' }}
+            />
+          </div>
           <div className='registerInputs'>
             <label>Name With Initials</label>
             <input
