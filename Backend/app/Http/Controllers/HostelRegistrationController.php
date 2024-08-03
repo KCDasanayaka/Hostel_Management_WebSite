@@ -9,26 +9,30 @@ use Illuminate\Support\Facades\Validator;
 class HostelRegistrationController extends Controller
 {
     public function register(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'email' => 'required|string|email|max:255|exists:users,email', // Validate email exists in users table
-            'name' => 'required|string|max:255',
-            'address' => 'required|string|max:255',
-            'index_number' => 'required|string|max:255',
-            'faculty' => 'required|string|max:255',
-            'academic_year' => 'required|string|max:255',
-            'birthday' => 'required|date',
-            'department' => 'required|string|max:255',
-            'phone_number' => 'required|string|max:255',
-            'nic_number' => 'required|string|max:255',
-        ]);
+{
+    $validator = Validator::make($request->all(), [
+        'name_with_initials' => 'required|string|max:255',
+        'address' => 'required|string|max:255',
+        'index_number' => 'required|string|max:255',
+        'faculty' => 'required|string|max:255',
+        'academic_year' => 'required|string|max:255',
+        'birthday' => 'required|date',
+        'department' => 'required|string|max:255',
+        'phone_number' => 'required|string|max:255',
+        'nic_number' => 'required|string|max:255',
+    ], [
+        'email.exists' => 'The email must exist in the users table.',
+        'birthday.date' => 'The birthday must be a valid date.',
+        // Add other custom messages as needed
+    ]);
 
-        if ($validator->fails()) {
-            return response()->json(['message' => $validator->errors()], 400);
-        }
-
-        $registration = HostelRegistration::create($request->all());
-
-        return response()->json(['message' => 'Registration successful'], 200);
+    if ($validator->fails()) {
+        return response()->json(['message' => $validator->errors()], 400);
     }
+
+    $registration = HostelRegistration::create($request->all());
+
+    return response()->json(['message' => 'Registration successful'], 200);
+}
+
 }

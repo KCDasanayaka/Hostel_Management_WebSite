@@ -33,30 +33,36 @@ const Register = () => {
 
   // Handle form submission
   const handleRegister = async () => {
-    const formDataToSend = new FormData();
-    Object.keys(formData).forEach((key) => {
-      formDataToSend.append(key, formData[key]);
-    });
-    if (image) {
-      formDataToSend.append('image', image);
-    }
-
     try {
+      const formDataToSend = new FormData();
+      
+      // Append form data
+      Object.keys(formData).forEach(key => formDataToSend.append(key, formData[key]));
+      
+      // Append image file if available
+      if (image) {
+        formDataToSend.append('image', image);
+      }
+
       const response = await fetch('http://localhost:8000/api/register-hostel', {
         method: 'POST',
-        body: formDataToSend,
+        body: formDataToSend, // FormData will handle the content type
       });
 
-      const data = await response.json();
-
-      if (response.ok) {
-        navigate("/Pages/DetailPage");
-      } else {
-        alert(data.message || 'Registration failed');
+      if (!response.ok) {
+        // Log response for debugging
+        const errorText = await response.text();
+        console.error('Server returned an error:', errorText);
+        throw new Error('Network response was not ok');
       }
+
+      const data = await response.json();
+      console.log('Registration successful:', data);
+      // Handle successful registration (e.g., navigate to another page)
+      navigate('/success'); // Replace with your success page route
+
     } catch (error) {
-      console.error('Error:', error);
-      alert('An unexpected error occurred');
+      console.error('There was a problem with the fetch operation:', error);
     }
   };
 
