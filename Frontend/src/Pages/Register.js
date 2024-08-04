@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import './register.css';
 import NavBar from './Components/NavBar';
 import { useNavigate } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Register = () => {
   const navigate = useNavigate();
@@ -53,16 +55,19 @@ const Register = () => {
         // Log response for debugging
         const errorText = await response.text();
         console.error('Server returned an error:', errorText);
+        toast.error(`Error: ${errorText}`); // Show error toast
         throw new Error('Network response was not ok');
       }
 
       const data = await response.json();
       console.log('Registration successful:', data);
+      toast.success('Registration successful!'); // Show success toast
       // Handle successful registration (e.g., navigate to another page)
       navigate('/success'); // Replace with your success page route
 
     } catch (error) {
       console.error('There was a problem with the fetch operation:', error);
+      toast.error('There was a problem with the fetch operation.'); // Show error toast
     }
   };
 
@@ -180,6 +185,7 @@ const Register = () => {
           </div>
         </div>
       </div>
+      <ToastContainer /> {/* Include ToastContainer in your component */}
     </div>
   );
 };

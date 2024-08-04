@@ -2,6 +2,9 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\HostelRegistrationController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -13,17 +16,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// Routes that require authentication using Sanctum
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/register-hostel', [HostelRegistrationController::class, 'store']);
+    Route::get('/user', function (Request $request) {
+        return $request->user();
+    });
+});
 
-
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\HostelRegistrationController;
-
-Route::post('/register-hostel', [HostelRegistrationController::class, 'register']);
-
+// Public routes
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
-
-
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});

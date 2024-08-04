@@ -4,19 +4,15 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateHostelManagementSystemTable extends Migration
+class CreateHostelRegistrationsTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
     public function up()
     {
-        Schema::create('hostel_management_system', function (Blueprint $table) {
+        Schema::create('hostel_registrations', function (Blueprint $table) {
             $table->id();
-            $table->string('name_with_initials');
-            $table->string('address');
+            $table->string('email');
+            $table->string('name');
+            $table->text('address');
             $table->string('index_number');
             $table->string('faculty');
             $table->string('academic_year');
@@ -24,18 +20,14 @@ class CreateHostelManagementSystemTable extends Migration
             $table->string('department');
             $table->string('phone_number');
             $table->string('nic_number');
-            $table->string('image_path')->nullable();
+            $table->string('imgPath')->nullable();
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
-        Schema::dropIfExists('hostel_management_system');
+        Schema::dropIfExists('hostel_registrations');
     }
 };
+

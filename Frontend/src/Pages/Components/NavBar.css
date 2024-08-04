@@ -30,35 +30,39 @@
         }
     }
 
-    .rightNavBar{
-        .navButton{
-            display: flex;
-            flex-direction: row;
-            border: 1px solid rgb(255, 255, 255);
-            padding: 10px 20px;
+    .rightNavBar {
+        .navButton {
+          display: flex;
+          flex-direction: row;
+          border: 1px solid rgb(255, 255, 255);
+          padding: 10px 20px;
+          cursor: pointer;
+          background-color: black;
+          color: white;
+          border-radius: 15px;
+          font-size: 20px;
+          font-weight: 700;
+          position: relative; 
+      
+          .logoutImg {
+            margin-left: 10px;
             cursor: pointer;
-            background-color: black;
-            color: white;
-            border-radius: 15px;
-            font-size: 20px;
-            font-weight: 700;
-
-            .logoutImg {
-                margin-left: 10px; /* Adjust spacing */
-                cursor: pointer;
-                width: 20px; /* Adjust size */
-                height: 20px; /* Adjust size */
-                filter: invert(100%);
-              }
-              
-        }
-        .navButton:hover {
+            width: 20px; 
+            height: 20px; 
+            filter: invert(100%);
+          }
+      
+          &:hover {
             background-color: white;
             color: black;
             border-color: black;
-        }
-        
-        .navButton::after {
+      
+            .logoutImg {
+              filter: invert(0%);
+            }
+          }
+      
+          &::after {
             content: '';
             display: block;
             width: 0;
@@ -68,10 +72,12 @@
             position: absolute;
             bottom: 0;
             left: 0;
-        }
-        
-        .navButton:hover::after {
+          }
+      
+          &:hover::after {
             width: 100%;
+          }
         }
-    }
+      }
+      
 }
