@@ -8,9 +8,11 @@ import 'react-toastify/dist/ReactToastify.css';
 const Register = () => {
   const navigate = useNavigate();
 
+  
   // State to store form data
   const [formData, setFormData] = useState({
     name_with_initials: '',
+    email: '', // Allow email to be manually entered
     address: '',
     index_number: '',
     faculty: '',
@@ -35,39 +37,40 @@ const Register = () => {
 
   // Handle form submission
   const handleRegister = async () => {
+    // Validation checks
+    if (!formData.name_with_initials || !formData.email || !formData.address) {
+      toast.error('Please fill in all required fields.');
+      return;
+    }
+
     try {
       const formDataToSend = new FormData();
-      
-      // Append form data
       Object.keys(formData).forEach(key => formDataToSend.append(key, formData[key]));
       
-      // Append image file if available
       if (image) {
         formDataToSend.append('image', image);
       }
 
       const response = await fetch('http://localhost:8000/api/register-hostel', {
         method: 'POST',
-        body: formDataToSend, // FormData will handle the content type
+        body: formDataToSend, // Send FormData object directly
       });
 
       if (!response.ok) {
-        // Log response for debugging
         const errorText = await response.text();
         console.error('Server returned an error:', errorText);
-        toast.error(`Error: ${errorText}`); // Show error toast
+        toast.error(`Error: ${errorText}`);
         throw new Error('Network response was not ok');
       }
 
       const data = await response.json();
       console.log('Registration successful:', data);
-      toast.success('Registration successful!'); // Show success toast
-      // Handle successful registration (e.g., navigate to another page)
-      navigate('/success'); // Replace with your success page route
+      toast.success('Registration successful!');
+      navigate('/success');
 
     } catch (error) {
       console.error('There was a problem with the fetch operation:', error);
-      toast.error('There was a problem with the fetch operation.'); // Show error toast
+      toast.error('There was a problem with the fetch operation.');
     }
   };
 
@@ -75,12 +78,12 @@ const Register = () => {
     <div className="Register">
       <NavBar />
       <div className="homeContent">
-        <div className='registerHead'>
+        <div className="registerHead">
           <h1>REGISTER</h1>
           <p>Add your correct information for each point</p>
         </div>
-        <div className='registerForm'>
-          <div className='registerImage'>
+        <div className="registerForm">
+          <div className="registerImage">
             <label htmlFor="imageUpload" className="imageUploadLabel">Upload Image</label>
             <input
               id="imageUpload"
@@ -90,16 +93,29 @@ const Register = () => {
               style={{ display: 'none' }}
             />
           </div>
-          <div className='registerInputs'>
-            <label>Name With Initials</label>
-            <input
-              type="text"
-              name="name_with_initials"
-              value={formData.name_with_initials}
-              onChange={handleChange}
-            />
-            <div className='registerDouble'>
-              <div className='registerCOntainer'>
+          <div className="registerInputs">
+            <div className="registerDouble">
+              <div className="registerContainer">
+                <label>Name With Initials</label>
+                <input
+                  type="text"
+                  name="name_with_initials"
+                  value={formData.name_with_initials}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="registerContainer">
+                <label>Email</label>
+                <input
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                />
+              </div>
+            </div>
+            <div className="registerDouble">
+              <div className="registerContainer">
                 <label>Address</label>
                 <input
                   type="text"
@@ -108,7 +124,7 @@ const Register = () => {
                   onChange={handleChange}
                 />
               </div>
-              <div className='registerCOntainer'>
+              <div className="registerContainer">
                 <label>Index Number</label>
                 <input
                   type="text"
@@ -118,8 +134,8 @@ const Register = () => {
                 />
               </div>
             </div>
-            <div className='registerDouble'>
-              <div className='registerCOntainer'>
+            <div className="registerDouble">
+              <div className="registerContainer">
                 <label>Faculty</label>
                 <input
                   type="text"
@@ -128,7 +144,7 @@ const Register = () => {
                   onChange={handleChange}
                 />
               </div>
-              <div className='registerCOntainer'>
+              <div className="registerContainer">
                 <label>Academic Year</label>
                 <input
                   type="text"
@@ -138,8 +154,8 @@ const Register = () => {
                 />
               </div>
             </div>
-            <div className='registerDouble'>
-              <div className='registerCOntainer'>
+            <div className="registerDouble">
+              <div className="registerContainer">
                 <label>BirthDay</label>
                 <input
                   type="date"
@@ -149,7 +165,7 @@ const Register = () => {
                   style={{ color: 'white', filter: 'revert(100%)' }}
                 />
               </div>
-              <div className='registerCOntainer'>
+              <div className="registerContainer">
                 <label>Department</label>
                 <input
                   type="text"
@@ -159,8 +175,8 @@ const Register = () => {
                 />
               </div>
             </div>
-            <div className='registerDouble'>
-              <div className='registerCOntainer'>
+            <div className="registerDouble">
+              <div className="registerContainer">
                 <label>Phone Number</label>
                 <input
                   type="text"
@@ -169,7 +185,7 @@ const Register = () => {
                   onChange={handleChange}
                 />
               </div>
-              <div className='registerCOntainer'>
+              <div className="registerContainer">
                 <label>NIC Number</label>
                 <input
                   type="text"
@@ -179,13 +195,13 @@ const Register = () => {
                 />
               </div>
             </div>
-            <div className='registerButton' onClick={handleRegister}>
+            <div className="registerButton" onClick={handleRegister}>
               <button>Submit</button>
             </div>
           </div>
         </div>
       </div>
-      <ToastContainer /> {/* Include ToastContainer in your component */}
+      <ToastContainer />
     </div>
   );
 };

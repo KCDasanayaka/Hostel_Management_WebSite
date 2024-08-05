@@ -1,14 +1,17 @@
+<?php
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class HostelManagementSystem extends Model
+class HostelRegistration extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'name_with_initials',
+        'name',
+        'email',
         'address',
         'index_number',
         'faculty',
@@ -17,6 +20,9 @@ class HostelManagementSystem extends Model
         'department',
         'phone_number',
         'nic_number',
-        'image_path',
+        'imgPath',
     ];
+
+    // Define the table name if it does not follow Laravel's naming convention
+    protected $table = 'hostel_registrations';
 }

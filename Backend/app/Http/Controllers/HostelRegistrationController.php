@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\HostelRegistration;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class HostelRegistrationController extends Controller
@@ -12,8 +11,9 @@ class HostelRegistrationController extends Controller
     public function store(Request $request)
     {
         // Validate the request data
-        $request->validate([
+        $validatedData = $request->validate([
             'name_with_initials' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
             'address' => 'required|string',
             'index_number' => 'required|string|max:255',
             'faculty' => 'required|string|max:255',
@@ -33,16 +33,16 @@ class HostelRegistrationController extends Controller
 
         // Create the registration record
         HostelRegistration::create([
-            'email' => Auth::user()->email, // Get email from the authenticated user
-            'name' => $request->name_with_initials,
-            'address' => $request->address,
-            'index_number' => $request->index_number,
-            'faculty' => $request->faculty,
-            'academic_year' => $request->academic_year,
-            'birthday' => $request->birthday,
-            'department' => $request->department,
-            'phone_number' => $request->phone_number,
-            'nic_number' => $request->nic_number,
+            'name_with_initials' => $validatedData['name_with_initials'],
+            'email' => $validatedData['email'],
+            'address' => $validatedData['address'],
+            'index_number' => $validatedData['index_number'],
+            'faculty' => $validatedData['faculty'],
+            'academic_year' => $validatedData['academic_year'],
+            'birthday' => $validatedData['birthday'],
+            'department' => $validatedData['department'],
+            'phone_number' => $validatedData['phone_number'],
+            'nic_number' => $validatedData['nic_number'],
             'imgPath' => $imgPath,
         ]);
 

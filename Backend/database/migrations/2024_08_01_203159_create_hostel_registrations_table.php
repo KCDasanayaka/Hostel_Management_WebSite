@@ -6,13 +6,18 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateHostelRegistrationsTable extends Migration
 {
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
     public function up()
     {
         Schema::create('hostel_registrations', function (Blueprint $table) {
             $table->id();
-            $table->string('email');
             $table->string('name');
-            $table->text('address');
+            $table->string('email')->unique();
+            $table->string('address');
             $table->string('index_number');
             $table->string('faculty');
             $table->string('academic_year');
@@ -25,9 +30,13 @@ class CreateHostelRegistrationsTable extends Migration
         });
     }
 
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
     public function down()
     {
         Schema::dropIfExists('hostel_registrations');
     }
-};
-
+}
