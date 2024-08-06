@@ -1,5 +1,7 @@
 <?php
 
+// app/Models/HostelRegistration.php
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -10,7 +12,7 @@ class HostelRegistration extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name',
+        'name_with_initials',
         'email',
         'address',
         'index_number',
@@ -20,9 +22,7 @@ class HostelRegistration extends Model
         'department',
         'phone_number',
         'nic_number',
-        'imgPath',
+        'image_path',
     ];
-
-    // Define the table name if it does not follow Laravel's naming convention
-    protected $table = 'hostel_registrations';
 }
+

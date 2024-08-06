@@ -7,8 +7,6 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const Register = () => {
   const navigate = useNavigate();
-  
-  // State to store form data
   const [formData, setFormData] = useState({
     name_with_initials: '',
     email: '',
@@ -23,54 +21,47 @@ const Register = () => {
   });
   const [image, setImage] = useState(null);
 
-  // Handle input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  // Handle image file selection
   const handleImageChange = (e) => {
     setImage(e.target.files[0]);
   };
 
-  // Handle form submission
   const handleRegister = async () => {
-    const formData = {
-        email,
-        address,
-        indexNumber,
-        faculty,
-        academicYear,
-        birthday,
-        department,
-        phoneNumber,
-        nicNumber,
-        image, // Make sure image is handled correctly
-        name, // Add name if it's required
-    };
-
-    try {
-        const response = await fetch('http://localhost:8000/api/register-hostel', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(formData),
-        });
-
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-
-        const result = await response.json();
-        console.log(result);
-    } catch (error) {
-        console.error('There was a problem with the fetch operation:', error);
+    const formDataObj = new FormData();
+    for (const key in formData) {
+      formDataObj.append(key, formData[key]);
     }
-};
-
+    if (image) {
+      formDataObj.append('image', image);
+    }
   
+    try {
+      const response = await fetch('http://localhost:8000/api/register-hostel', {
+        method: 'POST',  // Ensure that the method is POST
+        body: formDataObj,
+      });
+  
+      if (!response.ok) {
+        if (response.status >= 400 && response.status < 500) {
+          throw new Error('Client-side error');
+        } else if (response.status >= 500) {
+          throw new Error('Server-side error');
+        }
+      }
+  
+      const result = await response.json();
+      console.log(result);
+      toast.success('Registration successful!');
+      navigate('/some-page');
+    } catch (error) {
+      console.error('There was a problem with the fetch operation:', error);
+      toast.error(`There was an error with the registration: ${error.message}`);
+    }
+  };
   
 
   return (
@@ -93,7 +84,7 @@ const Register = () => {
             />
           </div>
           <div className="registerInputs">
-            <div className="registerDouble">
+          <div className="registerDouble">
               <div className="registerContainer">
                 <label>Name With Initials</label>
                 <input
