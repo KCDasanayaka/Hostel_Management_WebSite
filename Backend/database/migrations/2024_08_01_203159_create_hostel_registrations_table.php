@@ -13,9 +13,9 @@ class CreateHostelRegistrationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('hostel_registrations', function (Blueprint $table) {
+        Schema::create('register-hostel', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name_with_initials');
             $table->string('email')->unique();
             $table->string('address');
             $table->string('index_number');
@@ -25,10 +25,11 @@ class CreateHostelRegistrationsTable extends Migration
             $table->string('department');
             $table->string('phone_number');
             $table->string('nic_number');
-            $table->string('imgPath')->nullable();
+            $table->string('image')->nullable(); // Ensure this line is present
             $table->timestamps();
         });
     }
+    
 
     /**
      * Reverse the migrations.

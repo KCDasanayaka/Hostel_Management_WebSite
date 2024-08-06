@@ -7,12 +7,11 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const Register = () => {
   const navigate = useNavigate();
-
   
   // State to store form data
   const [formData, setFormData] = useState({
     name_with_initials: '',
-    email: '', // Allow email to be manually entered
+    email: '',
     address: '',
     index_number: '',
     faculty: '',
@@ -37,42 +36,42 @@ const Register = () => {
 
   // Handle form submission
   const handleRegister = async () => {
-    // Validation checks
-    if (!formData.name_with_initials || !formData.email || !formData.address) {
-      toast.error('Please fill in all required fields.');
-      return;
-    }
+    const formData = {
+        email,
+        address,
+        indexNumber,
+        faculty,
+        academicYear,
+        birthday,
+        department,
+        phoneNumber,
+        nicNumber,
+        image, // Make sure image is handled correctly
+        name, // Add name if it's required
+    };
 
     try {
-      const formDataToSend = new FormData();
-      Object.keys(formData).forEach(key => formDataToSend.append(key, formData[key]));
-      
-      if (image) {
-        formDataToSend.append('image', image);
-      }
+        const response = await fetch('http://localhost:8000/api/register-hostel', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData),
+        });
 
-      const response = await fetch('http://localhost:8000/api/register-hostel', {
-        method: 'POST',
-        body: formDataToSend, // Send FormData object directly
-      });
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
 
-      if (!response.ok) {
-        const errorText = await response.text();
-        console.error('Server returned an error:', errorText);
-        toast.error(`Error: ${errorText}`);
-        throw new Error('Network response was not ok');
-      }
-
-      const data = await response.json();
-      console.log('Registration successful:', data);
-      toast.success('Registration successful!');
-      navigate('/success');
-
+        const result = await response.json();
+        console.log(result);
     } catch (error) {
-      console.error('There was a problem with the fetch operation:', error);
-      toast.error('There was a problem with the fetch operation.');
+        console.error('There was a problem with the fetch operation:', error);
     }
-  };
+};
+
+  
+  
 
   return (
     <div className="Register">

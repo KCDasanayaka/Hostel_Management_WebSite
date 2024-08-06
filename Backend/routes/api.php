@@ -18,7 +18,6 @@ use App\Http\Controllers\HostelRegistrationController;
 
 // Routes that require authentication using Sanctum
 Route::middleware('auth:sanctum')->group(function () {
-    Route::post('/register-hostel', [HostelRegistrationController::class, 'store']);
     Route::get('/user', function (Request $request) {
         return $request->user();
     });
@@ -27,3 +26,4 @@ Route::middleware('auth:sanctum')->group(function () {
 // Public routes
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
+Route::post('register-hostel', [HostelRegistrationController::class, 'registerHostel']);
