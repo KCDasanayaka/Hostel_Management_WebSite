@@ -40,8 +40,8 @@ const Register = () => {
     }
   
     try {
-      const response = await fetch('http://localhost:8000/api/register-hostel', {
-        method: 'POST',  // Ensure that the method is POST
+      const response = await fetch('http://localhost:8000/api/hostel-register', {
+        method: 'POST',
         body: formDataObj,
       });
   
@@ -62,6 +62,7 @@ const Register = () => {
       toast.error(`There was an error with the registration: ${error.message}`);
     }
   };
+  
   
 
   return (

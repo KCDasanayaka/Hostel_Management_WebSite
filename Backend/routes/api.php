@@ -26,4 +26,4 @@ Route::middleware('auth:sanctum')->group(function () {
 // Public routes
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
-Route::post('/register-hostel', [HostelRegistrationController::class, 'register']);
+Route::post('/hostel-register', [HostelRegistrationController::class, 'hostelRegister']);
