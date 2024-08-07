@@ -46,8 +46,15 @@ const Register = () => {
       });
   
       if (!response.ok) {
+        const errorData = await response.json();
         if (response.status >= 400 && response.status < 500) {
-          throw new Error('Client-side error');
+          if (response.status === 422) {
+            // Handle validation errors
+            console.error('Validation errors:', errorData.errors);
+            toast.error('Validation failed. Check your inputs.');
+          } else {
+            throw new Error('Client-side error');
+          }
         } else if (response.status >= 500) {
           throw new Error('Server-side error');
         }
@@ -62,6 +69,7 @@ const Register = () => {
       toast.error(`There was an error with the registration: ${error.message}`);
     }
   };
+  
   
   
 
