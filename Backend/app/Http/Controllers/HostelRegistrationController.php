@@ -1,64 +1,56 @@
 <?php
 
-// app/Http/Controllers/HostelRegistrationController.php
-
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\HostelRegistration;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 class HostelRegistrationController extends Controller
 {
-    public function hostelRegister(Request $request)
+    public function register(Request $request)
     {
+        // Validate incoming request data
         $validator = Validator::make($request->all(), [
             'name_with_initials' => 'required|string|max:255',
-            'email' => 'required|email|unique:hostel_registrations,email',
-            'address' => 'required|string',
-            'index_number' => 'required|string',
-            'faculty' => 'required|string',
-            'academic_year' => 'required|string',
+            'email' => 'required|email|max:255|unique:hostel_registrations',
+            'address' => 'required|string|max:255',
+            'index_number' => 'required|string|max:20',
+            'faculty' => 'required|string|max:255',
+            'academic_year' => 'required|string|max:20',
             'birthday' => 'required|date',
-            'department' => 'required|string',
-            'phone_number' => 'required|string',
-            'nic_number' => 'required|string|unique:hostel_registrations,nic_number',
-            'image' => 'nullable|image|max:2048',
+            'department' => 'required|string|max:255',
+            'phone_number' => 'required|string|max:20',
+            'nic_number' => 'required|string|max:20',
+            'image' => 'nullable|image|max:1024', // Validate image file
         ]);
 
         if ($validator->fails()) {
-            // Log validation errors
-            \Log::error('Validation errors:', $validator->errors()->toArray());
-
-            // Return validation errors in the response
             return response()->json(['errors' => $validator->errors()], 422);
         }
 
-        try {
-            $data = $request->only([
-                'name_with_initials', 'email', 'address', 'index_number', 'faculty', 
-                'academic_year', 'birthday', 'department', 'phone_number', 'nic_number'
-            ]);
-
-            if ($request->hasFile('image')) {
-                $path = $request->file('image')->store('images', 'public');
-                $data['image_path'] = $path;
-            }
-
-            HostelRegistration::create($data);
-
-            return response()->json(['message' => 'Registration successful'], 201);
-        } catch (\Exception $e) {
-            \Log::error('Error during hostel registration', [
-                'error' => $e->getMessage(),
-                'trace' => $e->getTraceAsString()
-            ]);
-
-            return response()->json([
-                'error' => 'Server Error',
-                'message' => $e->getMessage()
-            ], 500);
+        // Handle the file upload if there is an image
+        $imagePath = null;
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('hostel_registrations', 'public');
         }
+
+        // Create a new hostel registration record
+        $registration = HostelRegistration::create([
+            'name_with_initials' => $request->name_with_initials,
+            'email' => $request->email,
+            'address' => $request->address,
+            'index_number' => $request->index_number,
+            'faculty' => $request->faculty,
+            'academic_year' => $request->academic_year,
+            'birthday' => $request->birthday,
+            'department' => $request->department,
+            'phone_number' => $request->phone_number,
+            'nic_number' => $request->nic_number,
+            'image' => $imagePath,
+        ]);
+
+        return response()->json(['message' => 'Registration successful', 'data' => $registration], 201);
     }
 }
- 
+

@@ -1,7 +1,5 @@
 <?php
 
-// app/Models/HostelRegistration.php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -22,7 +20,8 @@ class HostelRegistration extends Model
         'department',
         'phone_number',
         'nic_number',
-        'image_path',
+        'image',
     ];
 }
+
 

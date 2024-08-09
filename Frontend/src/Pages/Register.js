@@ -31,44 +31,40 @@ const Register = () => {
   };
 
   const handleRegister = async () => {
+    console.log('Sending data:', formData);
     const formDataObj = new FormData();
     for (const key in formData) {
-      formDataObj.append(key, formData[key]);
+        formDataObj.append(key, formData[key]);
     }
     if (image) {
-      formDataObj.append('image', image);
+        formDataObj.append('image', image);
     }
-  
+
     try {
-      const response = await fetch('http://localhost:8000/api/hostel-register', {
-        method: 'POST',
-        body: formDataObj,
-      });
-  
-      if (!response.ok) {
-        const errorData = await response.json();
-        if (response.status >= 400 && response.status < 500) {
-          if (response.status === 422) {
-            // Handle validation errors
-            console.error('Validation errors:', errorData.errors);
-            toast.error('Validation failed. Check your inputs.');
-          } else {
-            throw new Error('Client-side error');
-          }
-        } else if (response.status >= 500) {
-          throw new Error('Server-side error');
+        const response = await fetch('http://localhost:8000/api/hostel-register', {
+            method: 'POST',
+            body: formDataObj,
+        });
+
+        console.log('Response:', response);
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            console.error('Error Data:', errorData);
+            throw new Error('Fetch error');
         }
-      }
-  
-      const result = await response.json();
-      console.log(result);
-      toast.success('Registration successful!');
-      navigate('/some-page');
+
+        const result = await response.json();
+        console.log('Result:', result);
+        toast.success('Registration successful!');
+        navigate('/some-page');
     } catch (error) {
-      console.error('There was a problem with the fetch operation:', error);
-      toast.error(`There was an error with the registration: ${error.message}`);
+        console.error('There was a problem with the fetch operation:', error);
+        toast.error(`Error: ${error.message}`);
     }
-  };
+};
+
+  
   
   
   

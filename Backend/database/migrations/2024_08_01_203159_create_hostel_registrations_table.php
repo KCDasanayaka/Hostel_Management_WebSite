@@ -1,7 +1,5 @@
 <?php
 
-// database/migrations/xxxx_xx_xx_xxxxxx_create_hostel_registrations_table.php
-
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -21,8 +19,8 @@ class CreateHostelRegistrationsTable extends Migration
             $table->date('birthday');
             $table->string('department');
             $table->string('phone_number');
-            $table->string('nic_number')->unique();
-            $table->string('image_path')->nullable();
+            $table->string('nic_number');
+            $table->string('image')->nullable(); // For storing the image path
             $table->timestamps();
         });
     }
