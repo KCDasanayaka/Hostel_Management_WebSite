@@ -4,6 +4,7 @@ import NavBar from './Components/NavBar';
 import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import logo from '../assets/susl_logo_transparent1.png';
 
 const Register = () => {
   const navigate = useNavigate();
@@ -20,6 +21,7 @@ const Register = () => {
     nic_number: '',
   });
   const [image, setImage] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -27,59 +29,65 @@ const Register = () => {
   };
 
   const handleImageChange = (e) => {
-    setImage(e.target.files[0]);
+    const file = e.target.files[0];
+    setImage(file);
+
+    if (file) {
+      const previewUrl = URL.createObjectURL(file);
+      setImagePreview(previewUrl);
+    }
   };
 
   const handleRegister = async () => {
     console.log('Sending data:', formData);
     const formDataObj = new FormData();
     for (const key in formData) {
-        formDataObj.append(key, formData[key]);
+      formDataObj.append(key, formData[key]);
     }
     if (image) {
-        formDataObj.append('image', image);
+      formDataObj.append('image', image);
     }
 
     try {
-        const response = await fetch('http://localhost:8000/api/hostel-register', {
-            method: 'POST',
-            body: formDataObj,
-        });
+      const response = await fetch('http://localhost:8000/api/hostel-register', {
+        method: 'POST',
+        body: formDataObj,
+      });
 
-        console.log('Response:', response);
+      console.log('Response:', response);
 
-        if (!response.ok) {
-            const errorData = await response.json();
-            console.error('Error Data:', errorData);
-            throw new Error('Fetch error');
-        }
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error('Error Data:', errorData);
+        throw new Error('Fetch error');
+      }
 
-        const result = await response.json();
-        console.log('Result:', result);
-        toast.success('Registration successful!');
-        navigate('/some-page');
+      const result = await response.json();
+      console.log('Result:', result);
+      toast.success('Registration successful!');
+      navigate('/some-page');
     } catch (error) {
-        console.error('There was a problem with the fetch operation:', error);
-        toast.error(`Error: ${error.message}`);
+      console.error('There was a problem with the fetch operation:', error);
+      toast.error(`Error: ${error.message}`);
     }
-};
-
-  
-  
-  
-  
+  };
 
   return (
     <div className="Register">
       <NavBar />
       <div className="homeContent">
+      <div className="homeTop">
+        <img src={logo} alt="SUSL Logo" /> 
+      </div>
         <div className="registerHead">
           <h1>REGISTER</h1>
           <p>Add your correct information for each point</p>
         </div>
         <div className="registerForm">
           <div className="registerImage">
-            <label htmlFor="imageUpload" className="imageUploadLabel">Upload Image</label>
+            <label htmlFor="imageUpload" className="imageUploadLabel">
+              Upload Image
+            </label>
             <input
               id="imageUpload"
               type="file"
@@ -87,6 +95,11 @@ const Register = () => {
               onChange={handleImageChange}
               style={{ display: 'none' }}
             />
+            {imagePreview && (
+              <div className="imagePreviewContainer">
+                <img src={imagePreview} alt="Preview" className="imagePreview" />
+              </div>
+            )}
           </div>
           <div className="registerInputs">
           <div className="registerDouble">

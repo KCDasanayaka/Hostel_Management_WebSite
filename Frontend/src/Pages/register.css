@@ -122,4 +122,17 @@ input[type="date"] {
     color: transparent;
     text-shadow: 0 0 0 #000;
   }
-  
+  .imagePreviewContainer {
+    width: 150px;
+    height: 150px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-top: 10px;
+}
+
+.imagePreview {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
