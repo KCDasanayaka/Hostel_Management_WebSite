@@ -4,6 +4,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HostelRegistrationController;
+use App\Http\Controllers\AdminController;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -25,3 +28,5 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 
 Route::post('/hostel-register', [HostelRegistrationController::class, 'register']);
+Route::post('/Adminregister', [AdminController::class, 'register']);
+Route::post('/AdminLogin', [AdminController::class, 'login']);

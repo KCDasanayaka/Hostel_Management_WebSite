@@ -26,6 +26,9 @@ const NavBar = () => {
     navigate("/Pages/Home");
   };
 
+  const handleAdminReg=()=> {
+    navigate("/Pages/AdminLogin")
+  }
   const handleLogout = () => {
     localStorage.removeItem('user');
     setUserName(""); // Clear user name from state
@@ -42,6 +45,7 @@ const NavBar = () => {
         </p>
       </div>
       <div className="rightNavBar">
+        <div className="Admin"><button onClick={handleAdminReg}>Admins</button></div>
         <button className="navButton" onClick={handleJoinClick}>
           {userName ? (
             <>

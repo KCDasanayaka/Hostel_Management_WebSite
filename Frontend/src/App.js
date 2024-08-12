@@ -6,6 +6,8 @@ import Signup from './Pages/Signup';
 import Register from './Pages/Register';
 import DetailPage from './Pages/DetailPage';
 import RoomSelection from './Pages/RoomSelection';
+import AdminReg from './Pages/AdminReg';
+import AdminLogin from './Pages/AdminLogin';
 import './App.css';
 import 'react-toastify/dist/ReactToastify.css'; // Import the CSS for react-toastify
 import { ToastContainer } from 'react-toastify'; // Import the ToastContainer
@@ -21,6 +23,8 @@ function App() {
           <Route path='/Pages/Register' element={<Register />} />
           <Route path='/Pages/DetailPage' element={<DetailPage />} />
           <Route path='/Pages/RoomSelection' element={<RoomSelection />} />
+          <Route path='/Pages/AdminReg' element={<AdminReg/>}/>
+          <Route path='/Pages/AdminLogin' element={<AdminLogin/>}/>
         </Routes>
       </Router>
       <ToastContainer /> {/* Add the ToastContainer here */}

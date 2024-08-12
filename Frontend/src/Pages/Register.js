@@ -21,7 +21,8 @@ const Register = () => {
     nic_number: '',
   });
   const [image, setImage] = useState(null);
-  const [imagePreview, setImagePreview] = useState(null);
+  const [imageName, setImageName] = useState(null);
+  const [isImageUploaded, setIsImageUploaded] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -33,8 +34,8 @@ const Register = () => {
     setImage(file);
 
     if (file) {
-      const previewUrl = URL.createObjectURL(file);
-      setImagePreview(previewUrl);
+      setImageName(file.name); // Store the image name
+      setIsImageUploaded(true); // Set the state to true after the image is uploaded
     }
   };
 
@@ -76,16 +77,19 @@ const Register = () => {
     <div className="Register">
       <NavBar />
       <div className="homeContent">
-      <div className="homeTop">
-        <img src={logo} alt="SUSL Logo" /> 
-      </div>
+        <div className="homeTop">
+          <img src={logo} alt="SUSL Logo" />
+        </div>
         <div className="registerHead">
           <h1>REGISTER</h1>
           <p>Add your correct information for each point</p>
         </div>
         <div className="registerForm">
           <div className="registerImage">
-            <label htmlFor="imageUpload" className="imageUploadLabel">
+            <label
+              htmlFor="imageUpload"
+              className={`imageUploadLabel ${isImageUploaded ? 'labelSmall' : ''}`}
+            >
               Upload Image
             </label>
             <input
@@ -95,9 +99,9 @@ const Register = () => {
               onChange={handleImageChange}
               style={{ display: 'none' }}
             />
-            {imagePreview && (
-              <div className="imagePreviewContainer">
-                <img src={imagePreview} alt="Preview" className="imagePreview" />
+            {imageName && (
+              <div className="imageNameContainer">
+                <p className="imageName">{imageName}</p>
               </div>
             )}
           </div>
@@ -163,6 +167,16 @@ const Register = () => {
               </div>
             </div>
             <div className="registerDouble">
+              
+              <div className="registerContainer">
+                <label>Department</label>
+                <input
+                  type="text"
+                  name="department"
+                  value={formData.department}
+                  onChange={handleChange}
+                />
+              </div>
               <div className="registerContainer">
                 <label>BirthDay</label>
                 <input
@@ -171,15 +185,6 @@ const Register = () => {
                   value={formData.birthday}
                   onChange={handleChange}
                   style={{ color: 'white', filter: 'revert(100%)' }}
-                />
-              </div>
-              <div className="registerContainer">
-                <label>Department</label>
-                <input
-                  type="text"
-                  name="department"
-                  value={formData.department}
-                  onChange={handleChange}
                 />
               </div>
             </div>
