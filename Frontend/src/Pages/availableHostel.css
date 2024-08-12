@@ -1,0 +1,29 @@
+.availableOne{
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+    font-size: 20px;
+    border: 2px solid black;
+    padding: 10px 20px;
+    border-radius: 15px;
+}
+.availableDelete{
+    font-size: 15px;
+    font-weight: 550;
+    margin: auto;
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    background-color: black;
+    color: white;
+    cursor: pointer;
+}
+.availableOne p{
+    margin: auto;
+}
+.AvailableView{
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}

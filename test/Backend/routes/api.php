@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HostelRegistrationController;
 use App\Http\Controllers\AdminController;
-
+use App\Http\Controllers\HostelListController;
 
 
 /*
@@ -30,3 +30,8 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::post('/hostel-register', [HostelRegistrationController::class, 'register']);
 Route::post('/Adminregister', [AdminController::class, 'register']);
 Route::post('/AdminLogin', [AdminController::class, 'login']);
+Route::post('/Hostel-Details', [HostelListController::class, 'store']);
+Route::get('/Hostel-Details', [HostelListController::class, 'index']);
+Route::get('/Hostel-Details/{department}', [HostelListController::class, 'show']);
+Route::put('/Hostel-Details/{department}', [HostelListController::class, 'update']);
+Route::delete('/Hostel-Details/{department}', [HostelListController::class, 'destroy']);

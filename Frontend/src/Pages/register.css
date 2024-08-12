@@ -37,7 +37,7 @@
   padding: 20px;
   border-radius: 10px;
   align-items: center;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.4); /* Subtle shadow for depth */
 }
 
 .registerInputs{
@@ -60,7 +60,7 @@
 }
 
 .registerImage:hover {
-  border-color: #007bff; /* Highlighted border on hover */
+  border-color: #ffffff; /* Highlighted border on hover */
 }
 
 .registerImage input[type="file"] {
@@ -95,10 +95,10 @@
   font-weight: 600;
 }
 
-.registerInputs input {
+.registerInputs input,select {
   width: 100%;
   padding: 12px; /* Increased padding for better user experience */
-  color: #333333; /* Dark text color */
+  color: #ffffff; /* Dark text color */
   margin-bottom: 10px; /* Increased margin for better spacing */
   background-color: #000000; /* Lighter background for inputs */
   border: 1px solid #cccccc;
@@ -110,6 +110,7 @@
 .registerInputs input:focus {
   border-color: #000000; /* Highlighted border on focus */
   background-color: #ffffff; /* White background on focus */
+  color: rgb(0, 0, 0);
 }
 
 /* Double column layout for certain input fields */
@@ -154,9 +155,9 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 .registerButton button:hover {
-  background-color: #0056b3;
-  color: white;
-  border: 1px solid #0056b3;
+  background-color: #ffffff;
+  color: rgb(0, 0, 0);
+  border: 1px solid #000000;
 }
 
 .imageUploadLabel {
@@ -172,6 +173,50 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .imageUploadLabel.labelSmall {
   font-size: 12px; /* Smaller font size when the image is uploaded */
   padding: 8px 16px; /* Adjust padding if needed */
+}
+
+/* Change the color of the dropdown options when selected */
+.select {
+  color: #ffffff; /* Default color */
+  background-color: #000000; /* Default background */
+}
+
+.select option {
+  color: #ffffff; /* Option text color */
+  background-color: #000000; /* Option background color */
+}
+
+.select option:checked {
+  color: #000000; /* Selected option text color */
+  background-color: #ffffff; /* Selected option background color */
+}
+
+/* For customizing the dropdown arrow and more specific styling */
+.custom-select {
+  color: #ffffff; /* Default text color */
+  background-color: #000000; /* Default background */
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  position: relative;
+}
+
+.custom-select:focus {
+  outline: none;
+  border-color: #007bff;
+}
+
+.custom-select option {
+  color: #000; /* Option text color */
+  background-color: #fff; /* Option background color */
+}
+
+.custom-select option:checked {
+  color: #fff; /* Selected option text color */
+  background-color: #007bff; /* Selected option background color */
 }
 
 /* Responsive adjustments */

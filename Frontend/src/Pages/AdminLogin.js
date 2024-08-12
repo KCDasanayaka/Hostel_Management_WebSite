@@ -30,7 +30,7 @@ const Login = () => {
             const data = await response.json();
             toast.success(data.message);
             localStorage.setItem('user', JSON.stringify(data.user));
-            navigate("/Pages/Home");
+            navigate("/Pages/AvailableHostel");
         } catch (error) {
             console.error('Error:', error);
             toast.error("An error occurred. Please try again.");
