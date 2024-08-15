@@ -19,3 +19,4 @@ class HostelList extends Model
         'hostel_name' ,
     ];
 }
+?>

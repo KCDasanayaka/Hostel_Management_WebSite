@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './availableHostel.css';
 import NavBar from './Components/NavBar';
 import { useNavigate } from 'react-router-dom';
@@ -41,15 +41,14 @@ const Register = () => {
 
   const handleRegister = async () => {
     console.log('Sending data:', formData);
-    const formDataObj = new FormData();
-    for (const key in formData) {
-      formDataObj.append(key, formData[key]);
-    }
 
     try {
       const response = await fetch('http://localhost:8000/api/Hostel-Details', {
         method: 'POST',
-        body: formDataObj,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
       });
 
       console.log('Response:', response);
@@ -63,8 +62,8 @@ const Register = () => {
       const result = await response.json();
       console.log('Result:', result);
       toast.success('Registration successful!');
-      // Add the new hostel to the availableHostels state
-      setAvailableHostels([...availableHostels, formData]);
+      setAvailableHostels([...availableHostels, result.data]);  // Assuming `result.data` contains the newly created hostel
+
       // Reset form data after successful submission
       setFormData({
         faculty: '',
@@ -79,24 +78,20 @@ const Register = () => {
     }
   };
 
-  const handleDelete = async (department) => {
-    try {
-      const response = await fetch(`http://localhost:8000/api/Hostel-Details/${department}`, {
-        method: 'DELETE',
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to delete');
+  useEffect(() => {
+    // Fetch existing hostel data when component mounts
+    const fetchHostels = async () => {
+      try {
+        const response = await fetch('http://localhost:8000/api/Hostel-Details');
+        const data = await response.json();
+        setAvailableHostels(data);
+      } catch (error) {
+        console.error('Error fetching hostels:', error);
       }
+    };
 
-      toast.success('Hostel deleted successfully!');
-      // Remove the deleted hostel from the availableHostels state
-      setAvailableHostels(availableHostels.filter(hostel => hostel.department !== department));
-    } catch (error) {
-      console.error('Error deleting hostel:', error);
-      toast.error('Error deleting hostel');
-    }
-  };
+    fetchHostels();
+  }, []);
 
   return (
     <div className="Register">
@@ -179,11 +174,8 @@ const Register = () => {
               <p className='faculty'>{hostel.faculty}</p>
               <p className='department'>{hostel.department}</p>
               <p className='academic-year'>{hostel.academic_year}</p>
-              <p className='hostel'>{hostel.hostel}</p>
-              <p className='room-count'>{hostel.roomCount}</p>
-              <button className='availableDelete' onClick={() => handleDelete(hostel.department)}>
-                Delete
-              </button>
+              <p className='hostel'>{hostel.hostel_name}</p>
+              <p className='room-count'>{hostel.room_count}</p>
             </div>
           ))}
         </div>
