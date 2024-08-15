@@ -61,7 +61,7 @@ const Register = () => {
 
       const result = await response.json();
       console.log('Result:', result);
-      toast.success('Registration successful!');
+      toast.success('Hostel list update successful!');
       setAvailableHostels([...availableHostels, result.data]);
 
       // Reset form data after successful submission
