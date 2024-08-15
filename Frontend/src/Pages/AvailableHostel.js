@@ -62,7 +62,7 @@ const Register = () => {
       const result = await response.json();
       console.log('Result:', result);
       toast.success('Registration successful!');
-      setAvailableHostels([...availableHostels, result.data]);  // Assuming `result.data` contains the newly created hostel
+      setAvailableHostels([...availableHostels, result.data]);
 
       // Reset form data after successful submission
       setFormData({
@@ -75,6 +75,25 @@ const Register = () => {
     } catch (error) {
       console.error('There was a problem with the fetch operation:', error);
       toast.error(`Error: ${error.message}`);
+    }
+  };
+
+  const handleDelete = async (department) => {
+    try {
+      const response = await fetch(`http://localhost:8000/api/Hostel-Details/${department}`, {
+        method: 'DELETE',
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to delete');
+      }
+
+      toast.success('Hostel deleted successfully!');
+      // Remove the deleted hostel from the availableHostels state
+      setAvailableHostels(availableHostels.filter(hostel => hostel.department !== department));
+    } catch (error) {
+      console.error('Error deleting hostel:', error);
+      toast.error('Error deleting hostel');
     }
   };
 
@@ -176,6 +195,9 @@ const Register = () => {
               <p className='academic-year'>{hostel.academic_year}</p>
               <p className='hostel'>{hostel.hostel_name}</p>
               <p className='room-count'>{hostel.room_count}</p>
+              <button className='availableDelete' onClick={() => handleDelete(hostel.department)}>
+                Delete
+              </button>
             </div>
           ))}
         </div>

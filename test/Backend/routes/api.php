@@ -33,3 +33,4 @@ Route::post('/AdminLogin', [AdminController::class, 'login']);
 Route::post('/Hostel-Details', [HostelListController::class, 'store']);
 
 Route::get('/Hostel-Details', [HostelListController::class, 'index']);
+Route::delete('/Hostel-Details/{department}', [HostelListController::class, 'destroy']);
