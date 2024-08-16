@@ -37,3 +37,4 @@ Route::get('/Hostel-Details', [HostelListController::class, 'index']);
 Route::delete('/Hostel-Details/{id}', [HostelListController::class, 'destroy']);
 Route::get('/hostels/{department}', [HostelListController::class, 'getHostelsByDepartment']);
 
+Route::get('/hostels/{department}', 'HostelController@getHostelsByDepartment');

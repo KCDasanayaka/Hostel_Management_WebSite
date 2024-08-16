@@ -50,4 +50,15 @@ class HostelListController extends Controller
             return response()->json(['error' => 'Failed to delete hostel', 'details' => $e->getMessage()], 500);
         }
     }
+
+    public function getHostelsByDepartment($department)
+    {
+        try {
+            // Fetch hostels based on the department
+            $hostels = HostelList::where('department', $department)->get();
+            return response()->json($hostels);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Failed to fetch hostels'], 500);
+        }
+    }
 }

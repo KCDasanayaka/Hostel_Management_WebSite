@@ -12,28 +12,24 @@ function SelectedHostel() {
   const [loading, setLoading] = useState(true); // Add a loading state
 
   useEffect(() => {
-  console.log('Department:', department);  // Add this to confirm the department value
-  
-  const fetchHostels = async () => {
-    try {
-      const response = await fetch(`http://localhost:8000/api/hostels/${department}`);
-      if (!response.ok) {
-        throw new Error('Failed to fetch hostels');
+    const fetchHostels = async () => {
+      try {
+        const response = await fetch(`http://localhost:8000/api/hostels/${department}`);
+        if (!response.ok) {
+          throw new Error('Failed to fetch hostels');
+        }
+        const data = await response.json();
+        setAvailableHostels(data);
+      } catch (error) {
+        console.error('Error fetching hostels:', error);
+        toast.error('Error fetching hostels');
+      } finally {
+        setLoading(false);
       }
-      const data = await response.json();
-      console.log('Fetched hostels:', data);  // Log data to ensure it's being fetched
-      setAvailableHostels(data);
-    } catch (error) {
-      console.error('Error fetching hostels:', error);
-      toast.error('Error fetching hostels');
-    } finally {
-      setLoading(false);
-    }
-  };
+    };
 
-  fetchHostels();
-}, [department]);
-
+    fetchHostels();
+  }, [department]);
 
   if (loading) {
     return <p>Loading hostels...</p>; // Show a loading message while fetching
