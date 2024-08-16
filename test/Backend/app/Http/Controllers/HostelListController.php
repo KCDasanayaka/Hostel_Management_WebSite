@@ -11,23 +11,18 @@ class HostelListController extends Controller
     public function store(Request $request)
     {
         try {
-            // Create a new hostel entry
-            $hostel = new HostelList();
-            $hostel->faculty = $request->input('faculty');
-            $hostel->department = $request->input('department');
-            $hostel->room_count = $request->input('roomCount'); // Ensure field names match
-            $hostel->academic_year = $request->input('academic_year');
-            $hostel->hostel_name = $request->input('hostel');
+            $hostel = HostelList::create([
+                'faculty' => $request->input('faculty'),
+                'department' => $request->input('department'),
+                'room_count' => $request->input('room_count'),
+                'academic_year' => $request->input('academic_year'),
+                'hostel_name' => $request->input('hostel'),
+            ]);
 
-            // Save the hostel entry to the database
-            $hostel->save();
-
-            // Return a success response
             return response()->json(['message' => 'Hostel details added successfully', 'data' => $hostel], 201);
         } catch (\Exception $e) {
-            // Log the error for debugging
-            \Log::error('Error saving hostel details: ' . $e->getMessage());
-            return response()->json(['error' => 'Failed to save hostel details'], 500);
+            \Log::error('Error adding hostel details: ' . $e->getMessage());
+            return response()->json(['error' => 'Failed to add hostel details', 'details' => $e->getMessage()], 500);
         }
     }
 
@@ -44,21 +39,15 @@ class HostelListController extends Controller
     }
 
     // Delete a specific hostel entry
-    public function destroy($department)
+    public function destroy($id)
     {
         try {
-            $hostel = HostelList::where('department', $department)->first();
-
-            if (!$hostel) {
-                return response()->json(['message' => 'Hostel not found'], 404);
-            }
-
+            $hostel = HostelList::findOrFail($id);
             $hostel->delete();
-
-            return response()->json(['message' => 'Hostel deleted successfully']);
+            return response()->json(['message' => 'Hostel deleted successfully'], 200);
         } catch (\Exception $e) {
-            \Log::error('Error deleting hostel details: ' . $e->getMessage());
-            return response()->json(['error' => 'Failed to delete hostel details'], 500);
+            \Log::error('Error deleting hostel: ' . $e->getMessage());
+            return response()->json(['error' => 'Failed to delete hostel', 'details' => $e->getMessage()], 500);
         }
     }
 }

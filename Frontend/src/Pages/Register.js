@@ -34,8 +34,8 @@ const Register = () => {
     setImage(file);
 
     if (file) {
-      setImageName(file.name); // Store the image name
-      setIsImageUploaded(true); // Set the state to true after the image is uploaded
+      setImageName(file.name);
+      setIsImageUploaded(true);
     }
   };
 
@@ -54,8 +54,6 @@ const Register = () => {
         if (!response.ok) {
             const errorData = await response.json();
             console.error('Error Data:', errorData);
-
-            // Display validation errors to the user
             for (const key in errorData.errors) {
                 toast.error(`${key}: ${errorData.errors[key].join(', ')}`);
             }
@@ -63,13 +61,15 @@ const Register = () => {
         }
 
         const result = await response.json();
-        console.log('Result:', result);
         toast.success('Registration successful!');
+        
+        // Redirect to the SelectedHostel page with the department as a parameter
+        navigate(`/Pages/SelecedHostel/${formData.department}`);
     } catch (error) {
         console.error('There was a problem with the fetch operation:', error);
         toast.error(`Error: ${error.message}`);
     }
-};
+  };
 
 
   return (
@@ -174,6 +174,7 @@ const Register = () => {
                   name="department"
                   value={formData.department}
                   onChange={handleChange}
+                  style={{textTransform:'uppercase'}}
                 />
               </div>
               <div className="registerContainer">

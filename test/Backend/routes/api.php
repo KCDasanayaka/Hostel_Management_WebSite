@@ -30,7 +30,10 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::post('/hostel-register', [HostelRegistrationController::class, 'register']);
 Route::post('/Adminregister', [AdminController::class, 'register']);
 Route::post('/AdminLogin', [AdminController::class, 'login']);
-Route::post('/Hostel-Details', [HostelListController::class, 'store']);
 
+Route::post('/Hostel-Details', [HostelListController::class, 'store']);
 Route::get('/Hostel-Details', [HostelListController::class, 'index']);
-Route::delete('/Hostel-Details/{department}', [HostelListController::class, 'destroy']);
+// Route to delete a specific hostel by id
+Route::delete('/Hostel-Details/{id}', [HostelListController::class, 'destroy']);
+Route::get('/hostels/{department}', [HostelListController::class, 'getHostelsByDepartment']);
+

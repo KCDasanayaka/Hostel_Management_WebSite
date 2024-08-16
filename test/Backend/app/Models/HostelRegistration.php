@@ -27,4 +27,11 @@ class HostelRegistration extends Model
     protected $casts = [
         'birthday' => 'date',
     ];
+
+    public function getHostelsByDepartment($department)
+{
+    $hostels = HostelList::where('department', $department)->get();
+    return response()->json($hostels);
+}
+
 }

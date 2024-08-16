@@ -24,4 +24,3 @@ class CreateHostelListsTable extends Migration
         Schema::dropIfExists('hostel_lists');
     }
 }
-?>

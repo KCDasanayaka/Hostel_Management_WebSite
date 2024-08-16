@@ -49,6 +49,7 @@ class HostelRegistrationController extends Controller
             'nic_number' => $request->nic_number,
             'image' => $imagePath,
         ]);
+        
 
         // Return a success response with the created registration data
         return response()->json(['message' => 'Registration successful', 'data' => $registration], 201);
