@@ -7,7 +7,6 @@ use App\Http\Controllers\HostelRegistrationController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\HostelListController;
 
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -33,8 +32,10 @@ Route::post('/AdminLogin', [AdminController::class, 'login']);
 
 Route::post('/Hostel-Details', [HostelListController::class, 'store']);
 Route::get('/Hostel-Details', [HostelListController::class, 'index']);
+
 // Route to delete a specific hostel by id
 Route::delete('/Hostel-Details/{id}', [HostelListController::class, 'destroy']);
-Route::get('/hostels/{department}', [HostelListController::class, 'getHostelsByDepartment']);
 
-Route::get('/hostels/{department}', 'HostelController@getHostelsByDepartment');
+// Route to get hostels by department
+// Route to get all hostels
+Route::get('/hostels', [HostelListController::class, 'getIndex']);

@@ -9,10 +9,10 @@ import RoomSelection from './Pages/RoomSelection';
 import AdminReg from './Pages/AdminReg';
 import AdminLogin from './Pages/AdminLogin';
 import AvailableHostel from './Pages/AvailableHostel';
-import SelectedHostel from './Pages/SelectedHostel'; 
+import SelectedHostel from './Pages/SelectedHostel';
 import './App.css';
-import 'react-toastify/dist/ReactToastify.css'; // Import the CSS for react-toastify
-import { ToastContainer } from 'react-toastify'; // Import the ToastContainer
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
 
 function App() {
   return (
@@ -28,10 +28,10 @@ function App() {
           <Route path='/Pages/AdminReg' element={<AdminReg/>}/>
           <Route path='/Pages/AdminLogin' element={<AdminLogin/>}/>
           <Route path='/Pages/AvailableHostel' element={<AvailableHostel/>}/>
-          <Route path='/Pages/SelectedHostel/:department' element={<SelectedHostel/>}/>
+          <Route path='/Pages/SelectedHostel' element={<SelectedHostel/>}/>
         </Routes>
       </Router>
-      <ToastContainer /> {/* Add the ToastContainer here */}
+      <ToastContainer />
     </div>
   );
 }

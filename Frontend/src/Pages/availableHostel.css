@@ -23,5 +23,18 @@
     margin: auto;
 }
 
-.AvailableView{
+.searchBar{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+.searchBar input{
+padding: 12px; /* Increased padding for better user experience */
+  color: #ffffff; /* Dark text color */
+  margin-bottom: 10px; /* Increased margin for better spacing */
+  background-color: #000000; /* Lighter background for inputs */
+  border: 1px solid #cccccc;
+  border-radius: 8px;
+  font-size: 16px;
+  transition: border-color 0.3s ease, background-color 0.3s ease;
 }

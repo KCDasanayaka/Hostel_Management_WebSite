@@ -51,14 +51,17 @@ class HostelListController extends Controller
         }
     }
 
-    public function getHostelsByDepartment($department)
+    // Retrieve hostels by department
+    // Retrieve all hostel entries
+    public function getIndex()
     {
         try {
-            // Fetch hostels based on the department
-            $hostels = HostelList::where('department', $department)->get();
+            $hostels = HostelList::all();
             return response()->json($hostels);
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Failed to fetch hostels'], 500);
+            \Log::error('Error fetching hostel details: ' . $e->getMessage());
+            return response()->json(['error' => 'Failed to retrieve hostel details'], 500);
         }
     }
+
 }

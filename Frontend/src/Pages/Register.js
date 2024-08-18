@@ -64,7 +64,7 @@ const Register = () => {
         toast.success('Registration successful!');
         
         // Redirect to the SelectedHostel page with the department as a parameter
-        navigate(`/Pages/SelecedHostel/${formData.department}`);
+        navigate('/Pages/SelectedHostel');
     } catch (error) {
         console.error('There was a problem with the fetch operation:', error);
         toast.error(`Error: ${error.message}`);
