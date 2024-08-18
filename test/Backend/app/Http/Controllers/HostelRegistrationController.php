@@ -54,4 +54,23 @@ class HostelRegistrationController extends Controller
         // Return a success response with the created registration data
         return response()->json(['message' => 'Registration successful', 'data' => $registration], 201);
     }
+
+    public function getUserRegistration($email)
+    {
+        try {
+            // Fetch the registration data based on the email
+            $registration = HostelRegistration::where('email', $email)->first();
+
+            if (!$registration) {
+                return response()->json(['error' => 'User not found'], 404);
+            }
+
+            // Return the registration data
+            return response()->json($registration);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Failed to retrieve registration data'], 500);
+        }
+    }
+
+
 }

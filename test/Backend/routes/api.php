@@ -39,3 +39,4 @@ Route::delete('/Hostel-Details/{id}', [HostelListController::class, 'destroy']);
 // Route to get hostels by department
 // Route to get all hostels
 Route::get('/hostels', [HostelListController::class, 'getIndex']);
+Route::get('/registration/{email}', [HostelRegistrationController::class, 'getUserRegistration']);

@@ -12,8 +12,6 @@ function SelectedHostel() {
   const [loading, setLoading] = useState(true);
   const [searchDepartment, setSearchDepartment] = useState('');
   const [searchAcademicYear, setSearchAcademicYear] = useState('');
-  
-  const navigate = useNavigate(); // Use useNavigate hook
 
   const academic_yearOptions = [
     { value: "19/20", label: "19/20" },
@@ -22,9 +20,12 @@ function SelectedHostel() {
     { value: "22/23", label: "22/23" },
   ];
 
-  const handleRoomSelection = () => {
-    navigate("/Pages/RoomSelection"); // Use navigate function
-  };
+  const navigate = useNavigate();
+
+  const handleRoomSelection = (roomCount) => {
+    localStorage.setItem('room_count', roomCount); // Store room count in localStorage
+    navigate("/Pages/RoomSelection");
+  }
 
   useEffect(() => {
     const fetchHostels = async () => {
@@ -37,7 +38,7 @@ function SelectedHostel() {
         const data = await response.json();
         console.log('Fetched hostels:', data);
         setAvailableHostels(data);
-        setFilteredHostels(data); // Initially, display all hostels
+        setFilteredHostels(data);
       } catch (error) {
         console.error('Error fetching hostels:', error);
         toast.error(`Error fetching hostels: ${error.message}`);
@@ -114,7 +115,9 @@ function SelectedHostel() {
                   <span>Room Count: </span>
                   <p className='room-count'>{hostel.room_count}</p>
                 </div>
-                <button className='selectHostel' onClick={handleRoomSelection}>
+                <button 
+                  className='selectHostel' 
+                  onClick={() => handleRoomSelection(hostel.room_count)}>
                   Select
                 </button>
               </div>
