@@ -4,6 +4,7 @@ import NavBar from './Components/NavBar';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import logo from '../assets/susl_logo_transparent1.png';
+import { useNavigate } from 'react-router-dom';
 
 function SelectedHostel() {
   const [availableHostels, setAvailableHostels] = useState([]);
@@ -11,6 +12,8 @@ function SelectedHostel() {
   const [loading, setLoading] = useState(true);
   const [searchDepartment, setSearchDepartment] = useState('');
   const [searchAcademicYear, setSearchAcademicYear] = useState('');
+  
+  const navigate = useNavigate(); // Use useNavigate hook
 
   const academic_yearOptions = [
     { value: "19/20", label: "19/20" },
@@ -18,6 +21,10 @@ function SelectedHostel() {
     { value: "21/22", label: "21/22" },
     { value: "22/23", label: "22/23" },
   ];
+
+  const handleRoomSelection = () => {
+    navigate("/Pages/RoomSelection"); // Use navigate function
+  };
 
   useEffect(() => {
     const fetchHostels = async () => {
@@ -42,7 +49,6 @@ function SelectedHostel() {
     fetchHostels();
   }, []);
 
-  // Filter the hostels whenever the search criteria change
   useEffect(() => {
     const filtered = availableHostels.filter(hostel => 
       (searchDepartment === '' || hostel.department.toLowerCase().includes(searchDepartment.toLowerCase())) &&
@@ -88,11 +94,29 @@ function SelectedHostel() {
           {filteredHostels.length > 0 ? (
             filteredHostels.map((hostel, index) => (
               <div className='availableOne' key={index}>
-                <p className='faculty'>{hostel.faculty}</p>
-                <p className='department'>{hostel.department}</p>
-                <p className='academic-year'>{hostel.academic_year}</p>
-                <p className='hostel'>{hostel.hostel_name}</p>
-                <p className='room-count'>{hostel.room_count}</p>
+                <div className='availableDetail'>
+                  <span>Faculty: </span>
+                  <p className='faculty'>{hostel.faculty}</p>
+                </div>
+                <div className='availableDetail'>
+                  <span>Department: </span>
+                  <p className='department'>{hostel.department}</p>
+                </div>
+                <div className='availableDetail'>
+                  <span>Academic Year: </span>
+                  <p className='academic-year'>{hostel.academic_year}</p>
+                </div>
+                <div className='availableDetail'>
+                  <span>Hostel: </span>
+                  <p className='hostel'>{hostel.hostel_name}</p>
+                </div>
+                <div className='availableDetail'>
+                  <span>Room Count: </span>
+                  <p className='room-count'>{hostel.room_count}</p>
+                </div>
+                <button className='selectHostel' onClick={handleRoomSelection}>
+                  Select
+                </button>
               </div>
             ))
           ) : (

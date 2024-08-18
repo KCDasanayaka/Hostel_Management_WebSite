@@ -7,6 +7,7 @@
     padding: 10px 20px;
     border-radius: 15px;
     margin-top: 4%;
+    justify-content: space-between;
 }
 .availableDelete{
     font-size: 15px;
@@ -37,4 +38,22 @@ padding: 12px; /* Increased padding for better user experience */
   border-radius: 8px;
   font-size: 16px;
   transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+.availableDetail{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+.availableOne span{
+    font-size: 10px;
+}
+.selectHostel{
+    font-size: 15px;
+    font-weight: 550;
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    background-color: black;
+    color: white;
+    cursor: pointer;
 }
