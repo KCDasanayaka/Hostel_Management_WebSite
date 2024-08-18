@@ -22,8 +22,9 @@ function SelectedHostel() {
 
   const navigate = useNavigate();
 
-  const handleRoomSelection = (roomCount) => {
-    localStorage.setItem('room_count', roomCount); // Store room count in localStorage
+  const handleRoomSelection = (roomCount,hostel) => {
+    localStorage.setItem('room_count', roomCount);
+    localStorage.setItem('hostel', hostel); // Store room count in localStorage
     navigate("/Pages/RoomSelection");
   }
 

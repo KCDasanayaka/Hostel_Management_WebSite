@@ -15,9 +15,11 @@ const RoomSelection = () => {
   const [name, setName] = useState('');
   const [indexNumber, setIndexNumber] = useState('');
 
+  const storedRoomCount = localStorage.getItem('room_count'); // Move this outside useEffect to use it in multiple places
+  const storedHostel = localStorage.getItem('hostel'); // Corrected variable name
+
   // Retrieve room count from localStorage and set it in the state
   useEffect(() => {
-    const storedRoomCount = localStorage.getItem('room_count');
     if (storedRoomCount) {
       const parsedRoomCount = parseInt(storedRoomCount, 10);
       setRoomCount(parsedRoomCount);
@@ -25,8 +27,7 @@ const RoomSelection = () => {
     } else {
       toast.error("No room count found in local storage");
     }
-  }, []);
-  
+  }, [storedRoomCount]);
 
   const handleClickRoom = () => {
     navigate("/Pages/RoomSelection");
@@ -56,8 +57,10 @@ const RoomSelection = () => {
           <img src={logo} alt="SUSL Logo" />
         </div>
         <div className="RoomSelectionLeft">
-          <h2 className="Owner">Mr. S.A.K.C.Dasanayaka,</h2>
-          <h4 className="selectionSub">Available rooms : Select Any Room <span>(each box represent as a one room)</span> </h4>
+          <h2 className="Owner">{storedHostel}</h2>
+          <h4 className="selectionSub">
+            Available rooms: {storedRoomCount} - Select Any Room <span>(each box represents one room)</span>
+          </h4>
           <div className="container">
             <div className="number-grid">
               {numbers.map((number) => (
