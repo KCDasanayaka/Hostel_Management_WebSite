@@ -9,25 +9,28 @@ import 'react-toastify/dist/ReactToastify.css';
 const RoomSelection = () => {
   const navigate = useNavigate();
   const [roomCount, setRoomCount] = useState(0); // State to store room count
+  const [hostelName, setHostelName] = useState(''); // State to store hostel name
   const [numbers, setNumbers] = useState([]); // State to store the room numbers
   const [showForm, setShowForm] = useState(false);
   const [users, setUsers] = useState([]);
   const [name, setName] = useState('');
   const [indexNumber, setIndexNumber] = useState('');
 
-  const storedRoomCount = localStorage.getItem('room_count'); // Move this outside useEffect to use it in multiple places
-  const storedHostel = localStorage.getItem('hostel'); // Corrected variable name
-
-  // Retrieve room count from localStorage and set it in the state
+  // Retrieve room count and hostel name from localStorage and set them in the state
   useEffect(() => {
-    if (storedRoomCount) {
-      const parsedRoomCount = parseInt(storedRoomCount, 10);
-      setRoomCount(parsedRoomCount);
-      setNumbers(Array.from({ length: parsedRoomCount }, (_, i) => i + 1)); // Generate room numbers based on room count
+    const storedRoomCount = localStorage.getItem('room_count');
+    const storedHostelName = localStorage.getItem('hostel_name');
+
+    console.log("Retrieved from localStorage:", storedRoomCount, storedHostelName); // Debugging line
+
+    if (storedRoomCount && storedHostelName) {
+        setRoomCount(parseInt(storedRoomCount, 10)); // Handle number
+        setHostelName(storedHostelName); // Handle text
+        setNumbers(Array.from({ length: parseInt(storedRoomCount, 10) }, (_, i) => i + 1)); // Generate room numbers
     } else {
-      toast.error("No room count found in local storage");
+        toast.error("No room count or hostel name found in local storage");
     }
-  }, [storedRoomCount]);
+  }, []);
 
   const handleClickRoom = () => {
     navigate("/Pages/RoomSelection");
@@ -57,9 +60,9 @@ const RoomSelection = () => {
           <img src={logo} alt="SUSL Logo" />
         </div>
         <div className="RoomSelectionLeft">
-          <h2 className="Owner">{storedHostel}</h2>
+          <h2 className="Owner">{hostelName}</h2>
           <h4 className="selectionSub">
-            Available rooms: {storedRoomCount} - Select Any Room <span>(each box represents one room)</span>
+            Available rooms: {roomCount} - Select Any Room <span>(each box represents one room)</span>
           </h4>
           <div className="container">
             <div className="number-grid">
