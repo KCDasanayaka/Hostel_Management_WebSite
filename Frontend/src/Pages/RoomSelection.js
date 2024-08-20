@@ -5,6 +5,7 @@ import NavBar from "./Components/NavBar";
 import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import closeImg from '../assets/close.png'
 
 const RoomSelection = () => {
   const navigate = useNavigate();
@@ -64,6 +65,7 @@ const RoomSelection = () => {
           <h4 className="selectionSub">
             Available rooms: {roomCount} - Select Any Room <span>(each box represents one room)</span>
           </h4>
+          
           <div className="container">
             <div className="number-grid">
               {numbers.map((number) => (
@@ -89,7 +91,7 @@ const RoomSelection = () => {
                 <form className="user-form" onSubmit={handleSubmit}>
                   <h2>Add Your Name And Index Number To Complete The Registration</h2>
                   <div className="form-group">
-                    <label htmlFor="name">Name With Initials</label>
+                    <label className="roomTag" htmlFor="name">Name With Initials</label>
                     <input
                       type="text"
                       id="name"
@@ -99,7 +101,7 @@ const RoomSelection = () => {
                     />
                   </div>
                   <div className="form-group">
-                    <label htmlFor="indexNumber">Index Number</label>
+                    <label className="roomTag" htmlFor="indexNumber">Index Number</label>
                     <input
                       type="text"
                       id="indexNumber"

@@ -32,6 +32,9 @@ const Register = () => {
     { value: "22/23", label: "22/23" },
   ];
 
+  const hostelOptions =[
+    
+  ]
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -150,12 +153,17 @@ const Register = () => {
               </div>
               <div className="registerContainer">
                 <label>Hostel</label>
-                <input
-                  type="text"
+                <select
                   name="hostel"
                   value={formData.hostel}
-                  onChange={handleChange}
-                />
+                  onChange={handleChange}>
+                    <option value="" disabled>select Hostel</option>
+                    {hostelOptions.map((hostel, index) =>(
+                      <option key={index} value={hostel.value}>{hostel.label}</option>
+                    ))}
+
+                </select>
+                
               </div>
             </div>
             <div className="registerDouble" style={{ justifyContent: 'center' }}>
