@@ -40,3 +40,6 @@ Route::delete('/Hostel-Details/{id}', [HostelListController::class, 'destroy']);
 // Route to get all hostels
 Route::get('/hostels', [HostelListController::class, 'getIndex']);
 Route::get('/registration/{email}', [HostelRegistrationController::class, 'getUserRegistration']);
+
+Route::post('/register-room', [RoomRegistrationController::class, 'register']);
+Route::get('/room-details/{hostel_name}/{room_number}', [RoomRegistrationController::class, 'getRoomDetails']);

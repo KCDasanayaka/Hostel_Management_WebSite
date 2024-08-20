@@ -5,31 +5,34 @@ import NavBar from "./Components/NavBar";
 import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import closeImg from '../assets/close.png'
 
 const RoomSelection = () => {
   const navigate = useNavigate();
-  const [roomCount, setRoomCount] = useState(0); // State to store room count
-  const [hostelName, setHostelName] = useState(''); // State to store hostel name
-  const [numbers, setNumbers] = useState([]); // State to store the room numbers
+  const [roomCount, setRoomCount] = useState(0);
+  const [hostelName, setHostelName] = useState('');
+  const [numbers, setNumbers] = useState([]);
   const [showForm, setShowForm] = useState(false);
   const [users, setUsers] = useState([]);
   const [name, setName] = useState('');
   const [indexNumber, setIndexNumber] = useState('');
+  const [selectedRoomNumber, setSelectedRoomNumber] = useState(null); // Add this line
 
-  // Retrieve room count and hostel name from localStorage and set them in the state
   useEffect(() => {
     const storedRoomCount = localStorage.getItem('room_count');
     const storedHostelName = localStorage.getItem('hostel_name');
-
-    console.log("Retrieved from localStorage:", storedRoomCount, storedHostelName); // Debugging line
+    console.log("Retrieved hostel name:", storedHostelName); // Debugging line
+    if (storedHostelName) {
+        setHostelName(storedHostelName);
+    } else {
+        toast.error("No hostel name found in local storage");
+    }
 
     if (storedRoomCount && storedHostelName) {
-        setRoomCount(parseInt(storedRoomCount, 10)); // Handle number
-        setHostelName(storedHostelName); // Handle text
-        setNumbers(Array.from({ length: parseInt(storedRoomCount, 10) }, (_, i) => i + 1)); // Generate room numbers
+      setRoomCount(parseInt(storedRoomCount, 10));
+      setHostelName(storedHostelName);
+      setNumbers(Array.from({ length: parseInt(storedRoomCount, 10) }, (_, i) => i + 1));
     } else {
-        toast.error("No room count or hostel name found in local storage");
+      toast.error("No room count or hostel name found in local storage");
     }
   }, []);
 
@@ -38,16 +41,43 @@ const RoomSelection = () => {
   };
 
   const handleClick = (number) => {
+    setSelectedRoomNumber(number); // Store the selected room number
     setShowForm(true);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (users.length < 4) {
-      setUsers([...users, { name, indexNumber }]);
-      setName('');
-      setIndexNumber('');
-      setShowForm(false);
+      try {
+        const response = await fetch('http://localhost:8000/api/register-room', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            hostel_name: hostelName,
+            room_number: selectedRoomNumber, // Use the selected room number
+            name_with_initials: name,
+            index_number: indexNumber,
+          }),
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(`Failed to register: ${errorData.error}`);
+        }
+
+        const result = await response.json();
+        toast.success(result.message);
+        setUsers([...users, { name, indexNumber }]);
+        setName('');
+        setIndexNumber('');
+        setShowForm(false);
+      } catch (error) {
+        console.error('Error registering user:', error);
+        toast.error(`Error: ${error.message}`);
+      }
     } else {
       alert("Maximum 4 users can add their details.");
     }

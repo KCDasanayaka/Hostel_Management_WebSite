@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, lazy } from 'react';
 import './availableHostel.css';
 import NavBar from './Components/NavBar';
 import { toast, ToastContainer } from 'react-toastify';
@@ -33,7 +33,11 @@ const Register = () => {
   ];
 
   const hostelOptions =[
-    
+    {value:"venura_firstflow", label: "Venura firstFlow"},
+    {value:"venura_secondflow", label: "Venura secondFlow"},
+    {value:"venura_thirdflow", label: "Venura thirdFlow"},
+    {value:"nishmi", label: "Nishmi Hostel"},
+
   ]
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -111,6 +115,7 @@ const Register = () => {
     }
   };
 
+  
   return (
     <div className="Register">
       <NavBar />
