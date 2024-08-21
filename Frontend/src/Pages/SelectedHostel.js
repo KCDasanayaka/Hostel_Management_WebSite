@@ -62,7 +62,7 @@ function SelectedHostel() {
   }, [searchDepartment, searchAcademicYear, availableHostels]);
 
   if (loading) {
-    return <p>Loading hostels...</p>;
+    return <p className='loader'>Loading hostels...</p>;
   }
 
   return (
