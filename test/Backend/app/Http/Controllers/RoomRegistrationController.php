@@ -25,16 +25,20 @@ class RoomRegistrationController extends Controller
             }
 
             // Insert data into the correct table
+            DB::enableQueryLog();
+            // Your insertion code
             DB::table($hostelName)->insert([
                 'room_number' => $roomNumber,
                 'name_with_initials_1' => $nameWithInitials,
                 'index_number_1' => $indexNumber,
             ]);
+            dd(DB::getQueryLog()); // Display the query log
+
 
             return response()->json(['message' => 'Room registered successfully'], 201);
         } catch (\Exception $e) {
             \Log::error('Room registration failed: ' . $e->getMessage());
-            return response()->json(['error' => 'Failed to register room'], 500);
+            return response()->json(['error' => 'Failed to register room', 'details' => $e->getMessage()], 500);
         }
     }
 
