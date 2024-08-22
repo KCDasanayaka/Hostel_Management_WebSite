@@ -140,7 +140,6 @@ const RoomSelection = () => {
                       required
                     />
                   </div>
-                  <button type="submit" className="submit-btn">Submit</button>
                 </form>
               </div>
             )}
