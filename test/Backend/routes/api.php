@@ -41,5 +41,5 @@ Route::delete('/Hostel-Details/{id}', [HostelListController::class, 'destroy']);
 Route::get('/hostels', [HostelListController::class, 'getIndex']);
 Route::get('/registration/{email}', [HostelRegistrationController::class, 'getUserRegistration']);
 
-Route::post('/register-room', [RoomRegistrationController::class, 'register']);
+Route::post('/register-room', [RoomSelectionController::class, 'register']);
 Route::get('/room-details/{hostel_name}/{room_number}', [RoomRegistrationController::class, 'getRoomDetails']);
