@@ -93,7 +93,7 @@ const RoomSelection = () => {
         <div className="RoomSelectionLeft">
           <h2 className="Owner">{hostelName}</h2>
           <h4 className="selectionSub">
-            Available rooms: {roomCount} - Select Any Room <span>(each box represents one room)</span>
+            Available rooms: {roomCount} - Select Any Room <span>(each box represents one room and each room for 4 people)</span>
           </h4>
           
           <div className="container">
