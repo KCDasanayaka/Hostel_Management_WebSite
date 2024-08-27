@@ -22,13 +22,21 @@ function SelectedHostel() {
 
   const navigate = useNavigate();
 
-  const handleRoomSelection = (roomCount,hostel) => {
-    localStorage.setItem('room_count', roomCount);
-    localStorage.removeItem('hostel_name');
-    localStorage.setItem('hostel_name', hostel);
- // Store room count in localStorage
-    navigate("/Pages/RoomSelection");
-  }
+  // SelectedHostel.js
+
+// SelectedHostel.js
+
+const handleRoomSelection = (roomCount, hostelName) => {
+  console.log('Hostel name before storing:', hostelName); // Debugging line
+  localStorage.setItem('room_count', roomCount);
+  localStorage.setItem('hostel_name', hostelName); // Store room count in localStorage
+
+  console.log('Stored in local storage:', hostelName); // Debugging line
+  navigate("/Pages/RoomSelection");
+}
+
+
+
 
   useEffect(() => {
     const fetchHostels = async () => {
@@ -120,9 +128,10 @@ function SelectedHostel() {
                 </div>
                 <button 
                   className='selectHostel' 
-                  onClick={() => handleRoomSelection(hostel.room_count)}>
+                  onClick={() => handleRoomSelection(hostel.room_count, hostel.hostel_name)}>
                   Select
                 </button>
+
               </div>
             ))
           ) : (

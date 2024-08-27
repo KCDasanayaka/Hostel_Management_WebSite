@@ -17,24 +17,31 @@ const RoomSelection = () => {
   const [indexNumber, setIndexNumber] = useState('');
   const [selectedRoomNumber, setSelectedRoomNumber] = useState(null); // Add this line
 
-  useEffect(() => {
-    const storedRoomCount = localStorage.getItem('room_count');
-    const storedHostelName = localStorage.getItem('hostel_name');
-    console.log("Retrieved hostel name:", storedHostelName); // Debugging line
-    if (storedHostelName) {
-        setHostelName(storedHostelName);
-    } else {
-        toast.error("No hostel name found in local storage");
-    }
+  // RoomSelection.js
 
-    if (storedRoomCount && storedHostelName) {
-      setRoomCount(parseInt(storedRoomCount, 10));
+// RoomSelection.js
+
+useEffect(() => {
+  const storedRoomCount = localStorage.getItem('room_count');
+  const storedHostelName = localStorage.getItem('hostel_name');
+
+  console.log("Retrieved hostel name:", storedHostelName); // Debugging line
+
+  if (storedHostelName) {
       setHostelName(storedHostelName);
+  } else {
+      toast.error("No hostel name found in local storage");
+  }
+
+  if (storedRoomCount) {
+      setRoomCount(parseInt(storedRoomCount, 10));
       setNumbers(Array.from({ length: parseInt(storedRoomCount, 10) }, (_, i) => i + 1));
-    } else {
-      toast.error("No room count or hostel name found in local storage");
-    }
-  }, []);
+  } else {
+      toast.error("No room count found in local storage");
+  }
+}, []);
+
+
 
   const handleClickRoom = () => {
     navigate("/Pages/RoomSelection");
