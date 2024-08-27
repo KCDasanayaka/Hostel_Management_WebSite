@@ -15,12 +15,7 @@ class CreateRoomSelectionTable extends Migration
             $table->string('user1_index')->nullable();
             $table->string('user1_name')->nullable();
             $table->string('user2_index')->nullable();
-            $table->string('user2_name')->nullable();
-            $table->string('user3_index')->nullable();
-            $table->string('user3_name')->nullable();
-            $table->string('user4_index')->nullable();
-            $table->string('user4_name')->nullable();
-            $table->timestamps();
+            
         });
     }
 
