@@ -4,23 +4,32 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateHostelListsTable extends Migration
+class CreateRoomSelectionsTable extends Migration
 {
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
     public function up()
     {
-        Schema::create('hostel_lists', function (Blueprint $table) {
+        Schema::create('room_selection', function (Blueprint $table) {
             $table->id();
-            $table->string('faculty');
-            $table->string('department');
-            $table->integer('room_count');
-            $table->string('academic_year');
             $table->string('hostel_name');
+            $table->integer('room_number');
+            $table->string('name_with_initials');
+            $table->string('index_number');
             $table->timestamps();
         });
     }
 
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
     public function down()
     {
-        Schema::dropIfExists('hostel_lists');
+        Schema::dropIfExists('room_selection');
     }
 }

@@ -9,18 +9,14 @@ class RoomSelection extends Model
 {
     use HasFactory;
 
+    // The table associated with the model.
     protected $table = 'room_selection';
 
+    // The attributes that are mass assignable.
     protected $fillable = [
         'hostel_name',
         'room_number',
-        'user1_index',
-        'user1_name',
-        'user2_index',
-        'user2_name',
-        'user3_index',
-        'user3_name',
-        'user4_index',
-        'user4_name',
+        'name_with_initials',
+        'index_number',
     ];
 }

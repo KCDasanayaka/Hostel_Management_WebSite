@@ -15,33 +15,27 @@ const RoomSelection = () => {
   const [users, setUsers] = useState([]);
   const [name, setName] = useState('');
   const [indexNumber, setIndexNumber] = useState('');
-  const [selectedRoomNumber, setSelectedRoomNumber] = useState(null); // Add this line
+  const [selectedRoomNumber, setSelectedRoomNumber] = useState(null);
 
-  // RoomSelection.js
+  useEffect(() => {
+    const storedRoomCount = localStorage.getItem('room_count');
+    const storedHostelName = localStorage.getItem('hostel_name');
 
-// RoomSelection.js
+    console.log("Retrieved hostel name:", storedHostelName); // Debugging line
 
-useEffect(() => {
-  const storedRoomCount = localStorage.getItem('room_count');
-  const storedHostelName = localStorage.getItem('hostel_name');
+    if (storedHostelName) {
+        setHostelName(storedHostelName);
+    } else {
+        toast.error("No hostel name found in local storage");
+    }
 
-  console.log("Retrieved hostel name:", storedHostelName); // Debugging line
-
-  if (storedHostelName) {
-      setHostelName(storedHostelName);
-  } else {
-      toast.error("No hostel name found in local storage");
-  }
-
-  if (storedRoomCount) {
-      setRoomCount(parseInt(storedRoomCount, 10));
-      setNumbers(Array.from({ length: parseInt(storedRoomCount, 10) }, (_, i) => i + 1));
-  } else {
-      toast.error("No room count found in local storage");
-  }
-}, []);
-
-
+    if (storedRoomCount) {
+        setRoomCount(parseInt(storedRoomCount, 10));
+        setNumbers(Array.from({ length: parseInt(storedRoomCount, 10) }, (_, i) => i + 1));
+    } else {
+        toast.error("No room count found in local storage");
+    }
+  }, []);
 
   const handleClickRoom = () => {
     navigate("/Pages/RoomSelection");
@@ -54,41 +48,39 @@ useEffect(() => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    if (users.length < 4) {
-      try {
-        const response = await fetch('http://localhost:8000/api/register-room', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            hostel_name: hostelName,
-            room_number: selectedRoomNumber, // Use the selected room number
-            name_with_initials: name,
-            index_number: indexNumber,
-          }),
-        });
-
-        if (!response.ok) {
-          const errorData = await response.json();
-          throw new Error(`Failed to register: ${errorData.error}`);
-        }
-
-        const result = await response.json();
-        toast.success(result.message);
-        setUsers([...users, { name, indexNumber }]);
-        setName('');
-        setIndexNumber('');
-        setShowForm(false);
-      } catch (error) {
-        console.error('Error registering user:', error);
-        toast.error(`Error: ${error.message}`);
+  
+    try {
+      const response = await fetch('http://localhost:8000/api/register-room', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          hostel_name: hostelName, // This will be used to determine the table name
+          room_number: selectedRoomNumber,
+          name_with_initials: name,
+          index_number: indexNumber,
+        }),
+      });
+  
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(`Failed to register: ${errorData.error}`);
       }
-    } else {
-      alert("Maximum 4 users can add their details.");
+  
+      const result = await response.json();
+      toast.success(result.message);
+      setUsers([...users, { name, indexNumber }]);
+      setName('');
+      setIndexNumber('');
+      setShowForm(false);
+    } catch (error) {
+      console.error('Error registering user:', error);
+      toast.error(`Error: ${error.message}`);
     }
   };
+  
+
 
   return (
     <div className="home">
@@ -100,7 +92,7 @@ useEffect(() => {
         <div className="RoomSelectionLeft">
           <h2 className="Owner">{hostelName}</h2>
           <h4 className="selectionSub">
-            Available rooms: {roomCount} - Select Any Room <span>(each box represents one room and each room for 4 people)</span>
+            Available rooms: {roomCount} - Select Any Room <span>(each box represents one room)</span>
           </h4>
           
           <div className="container">
@@ -126,7 +118,15 @@ useEffect(() => {
                   ))}
                 </div>
                 <form className="user-form" onSubmit={handleSubmit}>
-                  <h2>Add Your Name And Index Number To Complete The Registration</h2>
+                  <div className="form-group">
+                    <label className="roomTag" htmlFor="hostelName">Hostel Name</label>
+                    <input
+                      type="text"
+                      id="hostelName"
+                      value={hostelName}
+                      readOnly
+                    />
+                  </div>
                   <div className="form-group">
                     <label className="roomTag" htmlFor="name">Name With Initials</label>
                     <input
