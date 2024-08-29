@@ -17,6 +17,7 @@ class HostelListController extends Controller
                 'room_count' => $request->input('room_count'),
                 'academic_year' => $request->input('academic_year'),
                 'hostel_name' => $request->input('hostel'),
+                'gender' => $request->input('gender'),
             ]);
 
             return response()->json(['message' => 'Hostel details added successfully', 'data' => $hostel], 201);

@@ -22,7 +22,7 @@ class HostelRegistrationController extends Controller
             'department' => 'required|string|max:255',
             'phone_number' => 'required|string|max:20',
             'nic_number' => 'required|string|max:20',
-            'image' => 'nullable|image|max:1024', // 1MB Max
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
         if ($validator->fails()) {
@@ -32,7 +32,8 @@ class HostelRegistrationController extends Controller
         // Handle the file upload if there is an image
         $imagePath = null;
         if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('hostel_registrations', 'public');
+            $imagePath = $request->file('image')->store('images', 'public');
+            $validated['image'] = $imagePath;
         }
 
         // Create a new hostel registration record

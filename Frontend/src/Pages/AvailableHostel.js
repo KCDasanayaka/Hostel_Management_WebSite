@@ -12,6 +12,7 @@ const Register = () => {
     academic_year: '',
     department: '',
     hostel: '',
+    gender:'',
   });
 
   const [availableHostels, setAvailableHostels] = useState([]);
@@ -37,6 +38,13 @@ const Register = () => {
     {value:"venura_secondflow", label: "Venura secondFlow"},
     {value:"venura_thirdflow", label: "Venura thirdFlow"},
     {value:"nishmi", label: "Nishmi Hostel"},
+    {value:"shantha_bandara", label: "Shantha Bandara Hostel"},
+    {value:"sinharaja_1", label: "sinharaja 01"},
+    {value:"gunarathna", label: "gunarathna Hostel"},
+    {value:"sithum", label: "sithum Hostel"},
+    {value:"sahan", label: "sahan Hostel"},
+    {value:"nimal", label: "nimal Hostel"},
+
 
   ]
   const handleChange = (e) => {
@@ -70,6 +78,7 @@ const Register = () => {
         academic_year: '',
         department: '',
         hostel: '',
+        gender: '',
       });
     } catch (error) {
       console.error('Error during the fetch operation:', error);
@@ -191,6 +200,15 @@ const Register = () => {
                   onChange={handleChange}
                 />
               </div>
+              <div className="registerContainer">
+                <label>Gender</label>
+                <input
+                  type="text"
+                  name="gender"
+                  value={formData.gender}
+                  onChange={handleChange}
+                />
+              </div>
             </div>
             <div className="registerButton" onClick={handleRegister}>
               <button>Submit</button>
@@ -202,6 +220,7 @@ const Register = () => {
             <div className='availableOne' key={hostel.id}>
               <p className='faculty'>{hostel.faculty}</p>
               <p className='department'>{hostel.department}</p>
+              <p className='gender'>{hostel.gender}</p>
               <p className='academic-year'>{hostel.academic_year}</p>
               <p className='hostel'>{hostel.hostel_name}</p>
               <p className='room-count'>{hostel.room_count}</p>

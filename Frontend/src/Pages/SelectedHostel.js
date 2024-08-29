@@ -119,6 +119,10 @@ const handleRoomSelection = (roomCount, hostelName) => {
                   <p className='academic-year'>{hostel.academic_year}</p>
                 </div>
                 <div className='availableDetail'>
+                  <span>Gender: </span>
+                  <p className='gender'>{hostel.gender}</p>
+                </div>
+                <div className='availableDetail'>
                   <span>Hostel: </span>
                   <p className='hostel'>{hostel.hostel_name}</p>
                 </div>

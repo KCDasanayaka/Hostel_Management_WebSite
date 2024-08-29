@@ -20,7 +20,10 @@ const Home = () => {
       <div className="homeChanges">
         <div className="homeLeft">
           <h2>Welcome to Sabaragamuwa University Hostel Management system</h2>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+          <p>Welcome to Sabaragamuwa University's Hostel Management System, your gateway to seamless accommodation solutions. 
+            Designed to simplify the complexities of hostel life, this system offers an intuitive platform for students to easily manage their room allocations, view available hostels, and stay updated on campus housing matters. 
+            With a focus on efficiency and convenience, our system ensures a hassle-free experience from registration to room selection, all while fostering a vibrant and well-organized student community. 
+            Explore the future of student housing with cutting-edge technology that puts your needs first.</p>
         </div>
         <div className="homeCenter">
           <button className="login_home" onClick={handleClickRegister}>

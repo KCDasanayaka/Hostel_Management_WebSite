@@ -40,15 +40,27 @@ const Register = () => {
   };
 
   const handleRegister = async () => {
-    console.log('Sending data:', formData);
+    const formDataToSend = new FormData();
+    formDataToSend.append('name_with_initials', formData.name_with_initials);
+    formDataToSend.append('email', formData.email);
+    formDataToSend.append('address', formData.address);
+    formDataToSend.append('index_number', formData.index_number);
+    formDataToSend.append('faculty', formData.faculty);
+    formDataToSend.append('academic_year', formData.academic_year);
+    formDataToSend.append('birthday', formData.birthday);
+    formDataToSend.append('department', formData.department);
+    formDataToSend.append('phone_number', formData.phone_number);
+    formDataToSend.append('nic_number', formData.nic_number);
+
+    // Append the image file if it exists
+    if (image) {
+        formDataToSend.append('image', image);
+    }
 
     try {
         const response = await fetch('http://localhost:8000/api/hostel-register', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(formData),
+            body: formDataToSend, // Note: No 'Content-Type' header is needed when using FormData
         });
 
         if (!response.ok) {
@@ -69,7 +81,8 @@ const Register = () => {
         console.error('There was a problem with the fetch operation:', error);
         toast.error(`Error: ${error.message}`);
     }
-  };
+};
+
 
 
   return (

@@ -14,5 +14,6 @@ class HostelList extends Model
         'room_count',
         'academic_year',
         'hostel_name',
+        'gender',
     ];
 }
