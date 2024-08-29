@@ -48,7 +48,8 @@ Route::get('/registration/{email}', [HostelRegistrationController::class, 'getUs
 
 
 Route::post('/register-room', [RoomSelectionController::class, 'registerRoom']);
-Route::get('/room-details', [RoomSelectionController::class, 'getRoomDetails']);
+Route::get('/get-room-users', [RoomSelectionController::class, 'getRoomUsers']);
+
 
 
 

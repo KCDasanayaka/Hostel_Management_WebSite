@@ -12,7 +12,7 @@ const RoomSelection = () => {
   const [hostelName, setHostelName] = useState('');
   const [numbers, setNumbers] = useState([]);
   const [showForm, setShowForm] = useState(false);
-  const [users, setUsers] = useState([]);  // Store submitted users
+  const [users, setUsers] = useState([]);
   const [name, setName] = useState('');
   const [indexNumber, setIndexNumber] = useState('');
   const [selectedRoomNumber, setSelectedRoomNumber] = useState(null);
@@ -21,34 +21,42 @@ const RoomSelection = () => {
     const storedRoomCount = localStorage.getItem('room_count');
     const storedHostelName = localStorage.getItem('hostel_name');
 
-    console.log("Retrieved hostel name:", storedHostelName); // Debugging line
-
     if (storedHostelName) {
-        setHostelName(storedHostelName);
+      setHostelName(storedHostelName);
     } else {
-        toast.error("No hostel name found in local storage");
+      toast.error("No hostel name found in local storage");
     }
 
     if (storedRoomCount) {
-        setRoomCount(parseInt(storedRoomCount, 10));
-        setNumbers(Array.from({ length: parseInt(storedRoomCount, 10) }, (_, i) => i + 1));
+      setRoomCount(parseInt(storedRoomCount, 10));
+      setNumbers(Array.from({ length: parseInt(storedRoomCount, 10) }, (_, i) => i + 1));
     } else {
-        toast.error("No room count found in local storage");
+      toast.error("No room count found in local storage");
     }
   }, []);
 
-  const handleClickRoom = () => {
-    navigate("/Pages/RoomSelection");
-  };
+  const handleClick = async (number) => {
+    setSelectedRoomNumber(number);
 
-  const handleClick = (number) => {
-    setSelectedRoomNumber(number); // Store the selected room number
+    try {
+      const response = await fetch(`http://localhost:8000/api/get-room-users?hostel_name=${hostelName}&room_number=${number}`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch users for this room');
+      }
+
+      const usersInRoom = await response.json();
+      setUsers(usersInRoom);
+    } catch (error) {
+      console.error('Error fetching users:', error);
+      toast.error('Error fetching users');
+    }
+
     setShowForm(true);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     try {
       const response = await fetch('http://localhost:8000/api/register-room', {
         method: 'POST',
@@ -56,23 +64,24 @@ const RoomSelection = () => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          hostel_name: hostelName, // This will be used to determine the table name
+          hostel_name: hostelName,
           room_number: selectedRoomNumber,
           name_with_initials: name,
           index_number: indexNumber,
         }),
       });
-  
+
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(`Failed to register: ${errorData.error}`);
       }
-  
+
       const result = await response.json();
       toast.success(result.message);
 
-      // Add the new user to the users array
-      setUsers([...users, { name, indexNumber }]);
+      // Fetch updated users list for the room
+      await handleClick(selectedRoomNumber);
+
       setName('');
       setIndexNumber('');
       setShowForm(false);
@@ -113,7 +122,7 @@ const RoomSelection = () => {
                 <div className="user-list">
                   {users.map((user, index) => (
                     <div key={index} className="user-item">
-                      {user.indexNumber} - {user.name}
+                      {user.name_with_initials} <br/>{user.index_number}
                     </div>
                   ))}
                 </div>
