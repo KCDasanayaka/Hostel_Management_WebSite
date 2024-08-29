@@ -6,7 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HostelRegistrationController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\HostelListController;
-use App\Http\Controllers\RoomRegistrationController;
+use App\Http\Controllers\RoomSelectionController;
 
 
 
@@ -45,6 +45,10 @@ Route::delete('/Hostel-Details/{id}', [HostelListController::class, 'destroy']);
 Route::get('/hostels', [HostelListController::class, 'getIndex']);
 Route::get('/registration/{email}', [HostelRegistrationController::class, 'getUserRegistration']);
 
-Route::post('/register-room', [RoomSelectionController::class, 'register']);
+
+
+Route::post('/register-room', [RoomSelectionController::class, 'registerRoom']);
+Route::get('/room-details', [RoomSelectionController::class, 'getRoomDetails']);
+
 
 

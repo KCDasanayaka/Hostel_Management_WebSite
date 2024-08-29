@@ -12,7 +12,7 @@ const RoomSelection = () => {
   const [hostelName, setHostelName] = useState('');
   const [numbers, setNumbers] = useState([]);
   const [showForm, setShowForm] = useState(false);
-  const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState([]);  // Store submitted users
   const [name, setName] = useState('');
   const [indexNumber, setIndexNumber] = useState('');
   const [selectedRoomNumber, setSelectedRoomNumber] = useState(null);
@@ -70,6 +70,8 @@ const RoomSelection = () => {
   
       const result = await response.json();
       toast.success(result.message);
+
+      // Add the new user to the users array
       setUsers([...users, { name, indexNumber }]);
       setName('');
       setIndexNumber('');
@@ -79,8 +81,6 @@ const RoomSelection = () => {
       toast.error(`Error: ${error.message}`);
     }
   };
-  
-
 
   return (
     <div className="home">
@@ -113,7 +113,7 @@ const RoomSelection = () => {
                 <div className="user-list">
                   {users.map((user, index) => (
                     <div key={index} className="user-item">
-                      {user.name} <br/>{user.indexNumber}
+                      {user.indexNumber} - {user.name}
                     </div>
                   ))}
                 </div>
