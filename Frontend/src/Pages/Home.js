@@ -9,6 +9,9 @@ const Home = () => {
   const handleClickRegister = () =>{
     navigate("/Pages/Register")
   }
+   const handleClickMyRoom = () =>{
+    navigate("/Pages/RoomSelection")
+   }
 
   return(
     <div className="home">
@@ -28,6 +31,9 @@ const Home = () => {
         <div className="homeCenter">
           <button className="login_home" onClick={handleClickRegister}>
             Register
+          </button>
+          <button className="login_home" onClick={handleClickMyRoom}>
+            My Room
           </button>
         </div>
       </div>
