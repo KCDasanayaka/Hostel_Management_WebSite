@@ -19,16 +19,20 @@ function App() {
     <div className="App">
       <Router>
         <Routes>
+          {/* Home Page at root URL */}
+          <Route path='/' element={<Home />} />
+
+          {/* Original routes with /Pages prefix */}
           <Route path='/Pages/Home' element={<Home />} />
           <Route path='/Pages/Login' element={<Login />} />
           <Route path='/Pages/Signup' element={<Signup />} />
           <Route path='/Pages/Register' element={<Register />} />
           <Route path='/Pages/DetailPage' element={<DetailPage />} />
           <Route path='/Pages/RoomSelection' element={<RoomSelection />} />
-          <Route path='/Pages/AdminReg' element={<AdminReg/>}/>
-          <Route path='/Pages/AdminLogin' element={<AdminLogin/>}/>
-          <Route path='/Pages/AvailableHostel' element={<AvailableHostel/>}/>
-          <Route path='/Pages/SelectedHostel' element={<SelectedHostel/>}/>
+          <Route path='/Pages/AdminReg' element={<AdminReg />} />
+          <Route path='/Pages/AdminLogin' element={<AdminLogin />} />
+          <Route path='/Pages/AvailableHostel' element={<AvailableHostel />} />
+          <Route path='/Pages/SelectedHostel' element={<SelectedHostel />} />
         </Routes>
       </Router>
       <ToastContainer />
